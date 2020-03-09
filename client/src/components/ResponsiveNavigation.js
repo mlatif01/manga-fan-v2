@@ -19,6 +19,7 @@ export default function ResponsiveNavigation({
         </figure>
         {navLinks.map((link, index) => (
           <li
+            key={link.text}
             onMouseEnter={() => setHoverIndex(index)}
             onMouseLeave={() => setHoverIndex(-1)}
             style={{

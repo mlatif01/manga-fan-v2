@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ResponsiveNavigation from './components/ResponsiveNavigation';
 
-import './App.css';
+// import './App.css';
 
 function App() {
   const navLinks = [
@@ -30,6 +30,10 @@ function App() {
     }
   ];
 
+  const icons = {
+    registerIcon: 'fas fa-user-plus'
+  };
+
   const logo = 'fab fa-cloudversify';
 
   return (
@@ -39,7 +43,10 @@ function App() {
         <Switch>
           <Route exact path='/' component={Landing} />
           <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} />
+          <Route
+            path='/register'
+            render={props => <Register {...props} icon={icons.registerIcon} />}
+          />
         </Switch>
       </Router>
     </div>

@@ -1,0 +1,72 @@
+.form {
+  background-color: $register-color;
+  margin: 3rem 30%;
+  padding: 4rem;
+  border-radius: 2rem;
+  box-shadow: 10px 10px 10px #ccc;
+
+  i {
+    color: #fff;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  &-group {
+    margin: 1.2rem 0;
+  }
+
+  small {
+    // position: absolute;
+    color: #e74c3c;
+
+    &.fade-in {
+      opacity: 1;
+      animation-name: fadeInOpacity;
+      animation-iteration-count: 1;
+      animation-timing-function: ease-in-out;
+      animation-duration: 1s;
+    }
+
+    @keyframes fadeInOpacity {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+  }
+
+  &.success {
+    input[type='text'],
+    input[type='email'],
+    input[type='password'],
+    input[type='date'],
+    input[type='number'],
+    select,
+    textarea {
+      border-color: #2ecc71;
+    }
+  }
+
+  input[type='text'],
+  input[type='email'],
+  input[type='password'],
+  input[type='date'],
+  input[type='number'],
+  select,
+  textarea {
+    transition: 0.2s ease-in-out;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    padding: 0.4rem;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+
+    &.error-input {
+      border-color: $danger-color;
+      border: 2px solid $danger-color;
+    }
+  }
+}
