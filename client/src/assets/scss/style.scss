@@ -1,0 +1,46 @@
+@import './_config.scss';
+@import './toolbar.scss';
+@import './form.scss';
+
+// Default
+html {
+  height: 100vh;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: #fff;
+  color: #333;
+}
+
+.App {
+  text-align: center;
+}
+
+// Text
+.lead {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.text-lg {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+// Line
+.line {
+  height: 1px;
+  background: #ccc;
+  margin: 1.5rem 0;
+}
