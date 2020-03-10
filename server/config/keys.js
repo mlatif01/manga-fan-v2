@@ -1,0 +1,4 @@
+module.exports = {
+  mongoURI:
+    'mongodb+srv://mirato:chanceball@cluster0-q5u17.mongodb.net/test?retryWrites=true&w=majority'
+};
