@@ -31,7 +31,8 @@ function App() {
   ];
 
   const icons = {
-    registerIcon: 'fas fa-user-plus'
+    registerIcon: 'fas fa-user-plus',
+    loginIcon: 'fas fa-sign-in-alt'
   };
 
   const logo = 'fab fa-cloudversify';
@@ -42,7 +43,10 @@ function App() {
         <ResponsiveNavigation navLinks={navLinks} logo={logo} />
         <Switch>
           <Route exact path='/' component={Landing} />
-          <Route path='/login' component={Login} />
+          <Route
+            path='/login'
+            render={props => <Login {...props} icon={icons.loginIcon} />}
+          />
           <Route
             path='/register'
             render={props => <Register {...props} icon={icons.registerIcon} />}
