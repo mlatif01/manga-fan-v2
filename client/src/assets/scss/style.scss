@@ -1,6 +1,7 @@
 @import './_config.scss';
 @import './toolbar.scss';
 @import './form.scss';
+@import './landing.scss';
 
 // Default
 html {
@@ -27,8 +28,31 @@ body {
   text-align: center;
 }
 
+// Show & Hide
+.hide-lg {
+  display: none;
+  visibility: hidden;
+}
+
+@media screen and (max-width: 759px) {
+  .hide-sm {
+    visibility: hidden;
+  }
+
+  .show-sm {
+    visibility: visible;
+  }
+}
+
+// Heading
+
+h2 {
+  color: $text-color;
+}
+
 // Text
 .lead {
+  color: $text-color;
   font-size: 1.5rem;
   margin-bottom: 1rem;
 }
@@ -37,6 +61,12 @@ body {
   font-size: 3rem;
   line-height: 1.2;
   margin-bottom: 1rem;
+}
+
+.text-xlg {
+  font-size: 4rem;
+  line-height: 1.6;
+  margin-bottom: 1.4rem;
 }
 
 // Line

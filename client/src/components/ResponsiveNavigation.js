@@ -36,6 +36,7 @@ export default function ResponsiveNavigation({
           </li>
         ))}
       </ul>
+      <h1 className='hide-lg show-sm'>Manga Fan</h1>
     </nav>
   );
 }

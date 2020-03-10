@@ -1,0 +1,23 @@
+.landing {
+  background: url('../img/showcase.jpg') repeat;
+  height: 100vh;
+  box-shadow: inset 120px 100px 250px #333, inset -120px -100px 250px #333;
+
+  &-inner {
+    height: 100%;
+    color: $primary-color;
+    background-color: $light-color;
+    border-radius: 10px;
+    width: 30vw;
+    margin: 0 auto;
+    opacity: 0.95;
+    box-shadow: 10px 10px 10px #333;
+    z-index: 1;
+    padding: 2rem;
+    margin-top: 5rem;
+  }
+
+  i {
+    font-size: 7rem;
+  }
+}

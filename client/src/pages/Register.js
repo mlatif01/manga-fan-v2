@@ -21,7 +21,7 @@ export default function Register({ icon }) {
 
   return (
     <div className='page-content'>
-      <h1 className='text-lg'>Sign Up</h1>
+      <h2 className='text-lg'>Sign Up</h2>
       <p className='lead'>Create Your Account</p>
       <form className='form' onSubmit={handleSubmit}>
         <i className={icon} />

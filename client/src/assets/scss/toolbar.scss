@@ -4,12 +4,22 @@
 }
 
 nav.responsive-toolbar {
+  z-index: 2;
   background: $primary-color;
   height: 5rem;
   width: 100%;
   position: fixed;
   box-shadow: 2px 2px 2px #ccc;
   transition: 300ms ease all;
+
+  h1 {
+    color: #fff;
+    display: block;
+    margin-top: 0.5rem;
+    margin-right: 1.5rem;
+    font-size: 2rem;
+    float: right;
+  }
 
   ul {
     background: $primary-color;

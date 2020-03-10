@@ -19,7 +19,7 @@ export default function Login({ icon }) {
 
   return (
     <div className='page-content'>
-      <h1 className='text-lg'>Sign In</h1>
+      <h2 className='text-lg'>Sign In</h2>
       <p className='lead'>Login To Your Account</p>
       <form className='form login' onSubmit={handleSubmit}>
         <i className={icon} />

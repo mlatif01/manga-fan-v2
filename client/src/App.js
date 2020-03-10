@@ -42,7 +42,11 @@ function App() {
       <Router>
         <ResponsiveNavigation navLinks={navLinks} logo={logo} />
         <Switch>
-          <Route exact path='/' component={Landing} />
+          <Route
+            exact
+            path='/'
+            render={props => <Landing {...props} logo={logo} />}
+          />
           <Route
             path='/login'
             render={props => <Login {...props} icon={icons.loginIcon} />}
