@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const config = require('config');
+const verify = require('../../middleware/verifyToken');
 const jwt = require('jsonwebtoken');
 
 // Validation import
@@ -14,11 +15,11 @@ const {
 const User = require('../../models/User');
 
 /**
- * @route POST api/users
+ * @route POST api/users/register
  * @desc Register New User
  * @access Public
  */
-router.post('/', async (req, res) => {
+router.post('/register', async (req, res) => {
   const { username, email, password } = req.body;
 
   // Validation using Joi
@@ -90,6 +91,16 @@ router.post('/login', async (req, res) => {
   // });
 
   res.send({ token: token });
+});
+
+/**
+ * @route POST api/users/verify
+ * @desc Login User
+ * @access Private
+ */
+router.get('/verify', verify, async (req, res) => {
+  const user = await User.findById(req.user._id).select('-password');
+  return res.send(user);
 });
 
 module.exports = router;
