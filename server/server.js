@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const port = process.env.PORT || 5000;
+const config = require('config');
 
 // Init Express
 const app = express();
@@ -11,7 +12,7 @@ const app = express();
 const authRoute = require('./routes/api/auth');
 
 // DB Config
-const db = require('./config/keys').mongoURI;
+const db = config.get('mongoURI');
 
 // Connect to DB
 mongoose.connect(db, { useNewUrlParser: true }, () => {

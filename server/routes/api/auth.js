@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const config = require('config');
+const jwt = require('jsonwebtoken');
 
 // Validation import
 const {
@@ -60,6 +62,34 @@ router.post('/', async (req, res) => {
     res.status.send(400).send(err);
   }
   console.log('Registered');
+});
+
+/**
+ * @route POST api/users
+ * @desc Login User
+ * @access Public
+ */
+router.post('/login', async (req, res) => {
+  // Validate data before user is created
+  const { error } = loginValidation(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
+
+  // Check if the email is already in the DB
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) return res.status(400).send('Email is Not Found');
+
+  // Chheck if password is correct
+  const validPassword = await bcrypt.compare(req.body.password, user.password);
+  if (!validPassword)
+    return res.status(400).send('Email or Password is Invalid');
+
+  // Create and assign a token
+  const token = jwt.sign({ _id: user._id }, config.get('jwtSecret'));
+  // res.header('auth-token', token).send({
+  //   token: token
+  // });
+
+  res.send({ token: token });
 });
 
 module.exports = router;
