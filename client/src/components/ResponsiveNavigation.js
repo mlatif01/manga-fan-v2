@@ -11,6 +11,8 @@ export default function ResponsiveNavigation({
   const [hoverIndex, setHoverIndex] = useState(-1);
   const [navOpen, setNavOpen] = useState(false);
 
+  // If user authenticated, show different links
+
   return (
     <nav className='responsive-toolbar' style={{ background }}>
       <ul style={{ background }} className={navOpen ? 'active' : ''}>

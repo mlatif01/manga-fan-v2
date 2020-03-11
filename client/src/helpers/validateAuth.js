@@ -1,8 +1,11 @@
 export default function validateAuth(values) {
   const errors = {};
+  console.log(values);
   // Username Errors
   if (!values.username) {
-    errors.username = 'Username Required';
+    if (values.username !== undefined) {
+      errors.username = 'Username Required';
+    }
   } else if (values.username.length < 6) {
     errors.username = 'Username must be at least 6 characters';
   }
@@ -20,7 +23,9 @@ export default function validateAuth(values) {
   }
   // Password Match Errors
   if (values.password !== values.confirmPassword) {
-    errors.confirmPassword = 'Password does not match';
+    if (values.confirmPassword !== undefined) {
+      errors.confirmPassword = 'Password does not match';
+    }
   }
   return errors;
 }

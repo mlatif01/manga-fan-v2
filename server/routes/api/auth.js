@@ -76,7 +76,7 @@ router.post('/login', async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   // Check if the email is already in the DB
-  const user = await User.findOne({ email: req.body.email });
+  var user = await User.findOne({ email: req.body.email });
   if (!user) return res.status(400).send('Email is Not Found');
 
   // Chheck if password is correct
@@ -89,8 +89,13 @@ router.post('/login', async (req, res) => {
   // res.header('auth-token', token).send({
   //   token: token
   // });
+  var user = {
+    id: user._id,
+    username: user.username,
+    email: user.email
+  };
 
-  res.send({ token: token });
+  res.send({ token, user });
 });
 
 /**
