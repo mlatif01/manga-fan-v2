@@ -1,6 +1,7 @@
 import React from 'react';
 import useFormValidation from '../hooks/useFormValidation';
 import validateAuth from '../helpers/validateAuth';
+import { AuthContext } from '../App';
 
 const INITIAL_STATE = {
   username: '',
@@ -10,6 +11,8 @@ const INITIAL_STATE = {
 };
 
 export default function Register({ icon }) {
+  const { dispatch } = React.useContext(AuthContext);
+
   const {
     handleSubmit,
     handleChange,
@@ -17,7 +20,7 @@ export default function Register({ icon }) {
     errors,
     isSubmitting,
     values
-  } = useFormValidation(INITIAL_STATE, validateAuth);
+  } = useFormValidation(INITIAL_STATE, validateAuth, dispatch);
 
   return (
     <div className='page-content'>

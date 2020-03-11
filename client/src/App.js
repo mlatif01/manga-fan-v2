@@ -16,6 +16,7 @@ import Manga from './pages/Manga';
 export const AuthContext = React.createContext();
 // Reducer Hook
 const INITIAL_STATE = {
+  redirectToLogin: false,
   isAuthenticated: false,
   user: null,
   token: null
@@ -37,6 +38,11 @@ const reducer = (state, action) => {
         ...state,
         isAuthenticated: false,
         user: null
+      };
+    case 'REGISTER':
+      return {
+        ...state,
+        redirectToLogin: true
       };
     default:
       return state;
@@ -108,12 +114,18 @@ function App() {
             }
             logo={logo}
           />
+          {/* If logged in, redirect to Dashboard*/}
           {state.isAuthenticated ? (
             <Redirect to='/dashboard' />
           ) : (
             console.log('not authed')
           )}
-
+          {/* If logged in, redirect to Login*/}
+          {state.redirectToLogin ? (
+            <Redirect to='/login' />
+          ) : (
+            console.log('not registered')
+          )}
           {!state.isAuthenticated ? (
             <Switch>
               <React.Fragment>
@@ -132,8 +144,8 @@ function App() {
                     <Register {...props} icon={icons.registerIcon} />
                   )}
                 />
-                <Route component={NoMatchPage} />
               </React.Fragment>
+              <Route component={NoMatchPage} />
             </Switch>
           ) : (
             <Switch>

@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import submitLogin from '../api/submitLogin';
+import submitRegister from '../api/submitRegister';
 
 export default function useFormValidation(initialState, validate, dispatch) {
   const [values, setValues] = useState(initialState);
@@ -9,23 +11,18 @@ export default function useFormValidation(initialState, validate, dispatch) {
   useEffect(() => {
     if (isSubmitting) {
       const noErrors = Object.keys(errors).length === 0;
-      console.log(errors);
+      const { username, email, password } = values;
+
       if (noErrors) {
-        console.log('SUBMITTING LOGIN');
-        // If no errors submit form
-        axios
-          .post('/api/users/login', values)
-          .then(res => {
-            if (res.status === 200) {
-              return res.data;
-            }
-          })
-          .then(resData => {
-            dispatch({
-              type: 'LOGIN',
-              payload: resData
-            });
-          });
+        console.log('SUBMITTING FORM');
+        // If no errors submit form - check if login or register
+        if (Object.keys(values).length > 2) {
+          console.log('REGISTERING');
+          submitRegister({ username, email, password }, dispatch);
+        } else {
+          console.log('LOGGING IN');
+          submitLogin(values, dispatch);
+        }
         setSubmitting(false);
       } else {
         // Display errors on that object
