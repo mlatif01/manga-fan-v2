@@ -11,8 +11,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ResponsiveNavigation from './components/ResponsiveNavigation';
 import Dashboard from './pages/Dashboard';
-export const AuthContext = React.createContext();
+import Manga from './pages/Manga';
 
+export const AuthContext = React.createContext();
 // Reducer Hook
 const INITIAL_STATE = {
   isAuthenticated: false,
@@ -51,7 +52,7 @@ function App() {
     );
   };
 
-  const navLinks = [
+  const preLoginNavLinks = [
     {
       text: 'Home',
       path: '/',
@@ -72,6 +73,21 @@ function App() {
     }
   ];
 
+  const postLoginNavLinks = [
+    {
+      text: 'Dashboard',
+      path: '/dashboard',
+      icon: 'fas fa-home',
+      hoverBackground: '#ff4f33'
+    },
+    {
+      text: 'Manga',
+      path: '/manga',
+      icon: 'fas fa-book',
+      hoverBackground: '#33d5ff'
+    }
+  ];
+
   const icons = {
     registerIcon: 'fas fa-user-plus',
     loginIcon: 'fas fa-sign-in-alt'
@@ -85,14 +101,21 @@ function App() {
     <AuthContext.Provider value={{ state, dispatch }}>
       <div className='App'>
         <Router>
-          <ResponsiveNavigation navLinks={navLinks} logo={logo} />
+          <ResponsiveNavigation
+            // Lovely!
+            navLinks={
+              !state.isAuthenticated ? preLoginNavLinks : postLoginNavLinks
+            }
+            logo={logo}
+          />
           {state.isAuthenticated ? (
             <Redirect to='/dashboard' />
           ) : (
             console.log('not authed')
           )}
-          <Switch>
-            {!state.isAuthenticated ? (
+
+          {!state.isAuthenticated ? (
+            <Switch>
               <React.Fragment>
                 <Route
                   exact
@@ -109,18 +132,21 @@ function App() {
                     <Register {...props} icon={icons.registerIcon} />
                   )}
                 />
+                <Route component={NoMatchPage} />
               </React.Fragment>
-            ) : (
+            </Switch>
+          ) : (
+            <Switch>
               <React.Fragment>
                 <Route
                   path='/dashboard'
                   render={props => <Dashboard {...props} />}
                 />
+                <Route path='/manga' render={props => <Manga {...props} />} />
               </React.Fragment>
-            )}
-
-            <Route component={NoMatchPage} />
-          </Switch>
+              <Route component={NoMatchPage} />
+            </Switch>
+          )}
         </Router>
       </div>
     </AuthContext.Provider>
