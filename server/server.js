@@ -10,6 +10,7 @@ const app = express();
 
 // Import Routes
 const authRoute = require('./routes/api/auth');
+const mangaRoute = require('./routes/api/manga');
 
 // DB Config
 const db = config.get('mongoURI');
@@ -30,6 +31,7 @@ app.use(express.json());
 // app.use(express.static.join((__dirname, "public")));
 
 app.use('/api/users', authRoute);
+app.use('/api/manga', mangaRoute);
 
 // Run server on the specified port
 app.listen(port, function() {

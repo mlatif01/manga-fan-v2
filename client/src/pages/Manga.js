@@ -1,34 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import Table from '../components/Table';
+import { AuthContext } from '../App';
 
 const INITIAL_STATE = {
-  manga: [
-    {
-      mangaId: 1,
-      author: 'Morikawa',
-      title: 'Hajime No Ippo',
-      releaseYear: 1989,
-      latestChapter: 200,
-      lastRead: 1
-    },
-    {
-      mangaId: 2,
-      author: 'Morikawa',
-      title: 'Hajime No Ippo',
-      releaseYear: 1989,
-      latestChapter: 200,
-      lastRead: 1
-    },
-    {
-      mangaId: 3,
-      author: 'Morikawa',
-      title: 'Hajime No Ippo',
-      releaseYear: 1989,
-      latestChapter: 200,
-      lastRead: 1
-    }
-  ],
+  manga: [],
   isFetching: false,
   hasError: false
 };
@@ -45,7 +21,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         isFetching: false,
-        songs: action.payload
+        manga: action.payload
       };
     case 'FETCH_MANGA_FAILURE':
       return {
@@ -59,11 +35,50 @@ const reducer = (state, action) => {
 };
 
 export default function Manga() {
+  const { state: authState } = React.useContext(AuthContext);
   const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
+
+  useEffect(() => {
+    dispatch({
+      type: 'FETCH_MANGA_REQUEST'
+    });
+    fetch('/api/manga', {
+      headers: {
+        Authorization: `Bearer ${authState.token}`
+      }
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw res;
+        }
+      })
+      .then(resJson => {
+        console.log(resJson);
+        dispatch({
+          type: 'FETCH_MANGA_SUCCESS',
+          payload: resJson
+        });
+      })
+      .catch(error => {
+        console.log(error);
+        dispatch({
+          type: 'FETCH_MANGA_FAILURE'
+        });
+      });
+  }, [authState.token]);
+
   return (
     <div className='page-content'>
       <h1>Favourite Manga</h1>
-      <Table manga={INITIAL_STATE.manga} />
+      {state.isFetching ? (
+        <span className='error'>LOADING...</span>
+      ) : state.hasError ? (
+        <span className='error'>AN ERROR HAS OCCURED</span>
+      ) : (
+        <Table manga={state.manga} />
+      )}
     </div>
   );
 }

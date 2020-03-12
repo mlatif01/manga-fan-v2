@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import submitLogin from '../api/submitLogin';
 import submitRegister from '../api/submitRegister';
 

@@ -19,7 +19,7 @@ export const AuthContext = React.createContext();
 // Reducer Hook
 const INITIAL_STATE = {
   redirectToLogin: false,
-  isAuthenticated: true,
+  isAuthenticated: false,
   user: null,
   token: null
 };
@@ -133,17 +133,9 @@ function App() {
             canLogout={state.isAuthenticated}
           />
           {/* If logged in, redirect to Dashboard*/}
-          {state.isAuthenticated ? (
-            <Redirect to='/dashboard' />
-          ) : (
-            console.log('not authed')
-          )}
+          {state.isAuthenticated ? <Redirect to='/dashboard' /> : null}
           {/* If registered in, redirect to Login*/}
-          {state.redirectToLogin ? (
-            <Redirect to='/login' />
-          ) : (
-            console.log('not registered')
-          )}
+          {state.redirectToLogin ? <Redirect to='/login' /> : null}
           {!state.isAuthenticated ? (
             <Switch>
               <React.Fragment>
