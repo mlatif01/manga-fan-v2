@@ -101,19 +101,26 @@ function App() {
     loginIcon: 'fas fa-sign-in-alt'
   };
 
+  // Logo
   const logo = 'fab fa-cloudversify';
 
-  const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
-
-  // configure toast
+  // Configure toast
   toast.configure({
     autoClose: 3000,
     draggable: false,
     draggablePercent: 60
   });
 
+  const handleLogout = () => {
+    dispatch({
+      type: 'LOGOUT'
+    });
+  };
+
+  const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
+
   return (
-    <AuthContext.Provider value={{ state, dispatch }}>
+    <AuthContext.Provider value={{ state, dispatch, handleLogout }}>
       <div className='App'>
         <Router>
           <ResponsiveNavigation
@@ -122,6 +129,7 @@ function App() {
               !state.isAuthenticated ? preLoginNavLinks : postLoginNavLinks
             }
             logo={logo}
+            canLogout={state.isAuthenticated}
           />
           {/* If logged in, redirect to Dashboard*/}
           {state.isAuthenticated ? (
@@ -129,7 +137,7 @@ function App() {
           ) : (
             console.log('not authed')
           )}
-          {/* If logged in, redirect to Login*/}
+          {/* If registered in, redirect to Login*/}
           {state.redirectToLogin ? (
             <Redirect to='/login' />
           ) : (

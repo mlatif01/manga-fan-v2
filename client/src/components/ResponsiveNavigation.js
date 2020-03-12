@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import LogoutButton from './LogoutButton';
 
 export default function ResponsiveNavigation({
   navLinks,
   background,
   hoverBackground,
   linkColor,
-  logo
+  logo,
+  canLogout
 }) {
   const [hoverIndex, setHoverIndex] = useState(-1);
   const [navOpen, setNavOpen] = useState(false);
@@ -21,6 +23,7 @@ export default function ResponsiveNavigation({
         </figure>
         {navLinks.map((link, index) => (
           <li
+            className={link.text.toLowerCase() + 'Link'}
             key={link.text}
             onMouseEnter={() => setHoverIndex(index)}
             onMouseLeave={() => setHoverIndex(-1)}
@@ -37,6 +40,7 @@ export default function ResponsiveNavigation({
             </Link>
           </li>
         ))}
+        {!canLogout ? <LogoutButton /> : null}
       </ul>
       <h1 className='hide-lg show-sm'>Manga Fan</h1>
     </nav>
