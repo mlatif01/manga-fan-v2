@@ -1,0 +1,42 @@
+table {
+  margin: 2rem auto;
+  th,
+  td {
+    padding: 1rem;
+    text-align: center;
+    color: $text-color;
+
+    .delete-manga {
+      &:hover {
+        color: $danger-color;
+      }
+
+      i {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  th {
+    background: $light-color;
+    color: $text-color;
+  }
+
+  tr {
+    color: $text-color;
+    width: 100vw;
+    cursor: pointer;
+
+    .last-read {
+      &:hover {
+        background-color: $warning-color;
+      }
+    }
+
+    :nth-child(2) {
+      &:hover {
+        background-color: $secondary-color;
+      }
+    }
+  }
+}

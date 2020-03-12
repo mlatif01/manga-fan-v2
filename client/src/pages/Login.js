@@ -8,7 +8,7 @@ const INITIAL_STATE = {
   password: ''
 };
 
-export default function Login({ icon, loginGoodRequest, loginBadRequest }) {
+export default function Login({ icon }) {
   const { dispatch } = React.useContext(AuthContext);
 
   const {

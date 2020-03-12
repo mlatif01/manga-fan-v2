@@ -40,7 +40,7 @@ export default function ResponsiveNavigation({
             </Link>
           </li>
         ))}
-        {!canLogout ? <LogoutButton /> : null}
+        {canLogout ? <LogoutButton /> : null}
       </ul>
       <h1 className='hide-lg show-sm'>Manga Fan</h1>
     </nav>

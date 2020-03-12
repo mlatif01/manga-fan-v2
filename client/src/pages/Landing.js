@@ -7,7 +7,7 @@ export default function Landing({ logo }) {
         <img src='' alt='' />
       </div>
       <div className='dark-overlay'>
-        <div className='landing-inner hide-sm'>
+        <div className='landing-inner'>
           <i className={logo}></i>
           <h1 className='text-xlg'>Manga Fan</h1>
           <p className='lead'>Connect and read Manga with other fans!</p>
