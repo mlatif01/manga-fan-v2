@@ -1,6 +1,5 @@
 export default function validateAuth(values) {
   const errors = {};
-  console.log(values);
   // Username Errors
   if (!values.username) {
     if (values.username !== undefined) {

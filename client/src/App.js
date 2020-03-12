@@ -5,6 +5,8 @@ import {
   Switch,
   Redirect
 } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Landing from './pages/Landing';
 import Login from './pages/Login';
@@ -102,6 +104,13 @@ function App() {
   const logo = 'fab fa-cloudversify';
 
   const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
+
+  // configure toast
+  toast.configure({
+    autoClose: 3000,
+    draggable: false,
+    draggablePercent: 60
+  });
 
   return (
     <AuthContext.Provider value={{ state, dispatch }}>

@@ -14,19 +14,15 @@ export default function useFormValidation(initialState, validate, dispatch) {
       const { username, email, password } = values;
 
       if (noErrors) {
-        console.log('SUBMITTING FORM');
         // If no errors submit form - check if login or register
         if (Object.keys(values).length > 2) {
-          console.log('REGISTERING');
           submitRegister({ username, email, password }, dispatch);
         } else {
-          console.log('LOGGING IN');
           submitLogin(values, dispatch);
         }
         setSubmitting(false);
       } else {
         // Display errors on that object
-        console.log('INVALID LOGIN SUBMISSION');
         setSubmitting(false);
       }
     }
