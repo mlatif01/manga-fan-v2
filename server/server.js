@@ -1,6 +1,7 @@
 // Imports
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const path = require('path');
 const port = process.env.PORT || 5000;
 const config = require('config');
@@ -11,6 +12,7 @@ const app = express();
 // Import Routes
 const authRoute = require('./routes/api/auth');
 const mangaRoute = require('./routes/api/manga');
+const mangaEdenRoute = require('./routes/api/mangaEden');
 
 // DB Config
 const db = config.get('mongoURI');
@@ -24,7 +26,7 @@ mongoose.connect(db, { useNewUrlParser: true }, () => {
 app.use(express.json());
 
 // Enable All CORS requests
-// app.use(cors());
+app.use(cors());
 
 // Router Middleware
 // In charge of sending static file requests to the client
@@ -32,6 +34,7 @@ app.use(express.json());
 
 app.use('/api/users', authRoute);
 app.use('/api/manga', mangaRoute);
+app.use('/api/manga-eden', mangaEdenRoute);
 
 // Run server on the specified port
 app.listen(port, function() {

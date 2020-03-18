@@ -1,12 +1,19 @@
 import React, { useEffect } from 'react';
 
 import Table from '../components/Table';
+import Reader from '../components/Reader';
+import loader from '../assets/img/loader.gif';
 import { AuthContext } from '../App';
 
 const INITIAL_STATE = {
   manga: [],
   isFetching: false,
-  hasError: false
+  hasError: false,
+  isReading: false,
+  chapterInfo: {
+    title: '',
+    chapter: 0
+  }
 };
 
 const reducer = (state, action) => {
@@ -29,6 +36,17 @@ const reducer = (state, action) => {
         hasError: true,
         isFetching: false
       };
+    case 'READ_MANGA':
+      return {
+        ...state,
+        isReading: true,
+        chapterInfo: action.payload
+      };
+    case 'NOT_READING_MANGA':
+      return {
+        ...state,
+        isReading: false
+      };
     default:
       return state;
   }
@@ -38,13 +56,13 @@ export default function Manga() {
   const { state: authState } = React.useContext(AuthContext);
   const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
 
-  useEffect(() => {
+  const fetchManga = () => {
     dispatch({
       type: 'FETCH_MANGA_REQUEST'
     });
     fetch('/api/manga', {
       headers: {
-        Authorization: `Bearer ${authState.token}`
+        Authorization: JSON.parse(localStorage.getItem('token'))
       }
     })
       .then(res => {
@@ -67,17 +85,47 @@ export default function Manga() {
           type: 'FETCH_MANGA_FAILURE'
         });
       });
+  };
+
+  useEffect(() => {
+    fetchManga();
   }, [authState.token]);
+
+  const triggerParentDispatch = () => {
+    fetchManga();
+    console.log('fetching');
+  };
+
+  const toggleIsReading = mangaObj => {
+    !state.isReading
+      ? dispatch({
+          type: 'READ_MANGA',
+          payload: mangaObj
+        })
+      : dispatch({
+          type: 'NOT_READING_MANGA',
+          payload: {}
+        });
+  };
 
   return (
     <div className='page-content'>
-      <h1>Favourite Manga</h1>
+      <h2 className='manga-h2'>Read Your Favourite Manga</h2>
       {state.isFetching ? (
-        <span className='error'>LOADING...</span>
+        <img src={loader} alt='loader' />
       ) : state.hasError ? (
         <span className='error'>AN ERROR HAS OCCURED</span>
+      ) : !state.isReading ? (
+        <Table
+          triggerParentDispatch={triggerParentDispatch}
+          toggleIsReading={toggleIsReading}
+          mangas={state.manga}
+        />
       ) : (
-        <Table manga={state.manga} />
+        <Reader
+          toggleIsReading={toggleIsReading}
+          chapterInfo={state.chapterInfo}
+        />
       )}
     </div>
   );

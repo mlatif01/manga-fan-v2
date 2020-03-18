@@ -1,5 +1,6 @@
 table {
   margin: 2rem auto;
+
   th,
   td {
     padding: 1rem;
@@ -8,7 +9,8 @@ table {
 
     .delete-manga {
       &:hover {
-        color: $danger-color;
+        background-color: $danger-color;
+        color: #fff;
       }
 
       i {
@@ -20,6 +22,14 @@ table {
   th {
     background: $light-color;
     color: $text-color;
+
+    .add-manga {
+      color: $success-color;
+      &:hover {
+        background-color: $success-color;
+        color: #fff;
+      }
+    }
   }
 
   tr {
@@ -27,16 +37,63 @@ table {
     width: 100vw;
     cursor: pointer;
 
+    .add-manga-th {
+      background-color: #fff;
+    }
+
     .last-read {
       &:hover {
         background-color: $warning-color;
       }
     }
 
-    :nth-child(2) {
+    .manga-title {
       &:hover {
         background-color: $secondary-color;
       }
     }
+
+    .title {
+      &:hover {
+        background-color: $secondary-color;
+      }
+    }
+  }
+}
+
+// Modal
+.add-modal-content {
+  text-align: center;
+  justify-content: center;
+
+  h1 {
+    color: $text-color;
+    margin: 1rem;
+  }
+
+  .btn {
+    margin-left: 10px;
+    &.btn-danger {
+      float: right;
+      position: absolute;
+      top: 0;
+      right: 10px;
+    }
+
+    &.btn-success {
+      position: relative;
+    }
+
+    i {
+      font-size: 1.4rem;
+    }
+  }
+
+  input[type='text'] {
+    font-size: 1.4rem;
+    width: 50%;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
   }
 }

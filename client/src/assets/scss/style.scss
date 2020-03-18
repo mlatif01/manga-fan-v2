@@ -3,6 +3,7 @@
 @import './form.scss';
 @import './landing.scss';
 @import './table.scss';
+@import './reader.scss';
 
 // Default
 html {
@@ -51,6 +52,12 @@ h2 {
   color: $text-color;
 }
 
+// Content
+.page-content {
+  padding-top: 8rem;
+  color: #000;
+}
+
 // Text
 .lead {
   color: $text-color;
@@ -95,12 +102,40 @@ h2 {
     padding: 0.3rem 0.6rem;
   }
 
+  &-md {
+    padding: 0.6rem 1.2rem;
+  }
+
   &.btn-primary {
     background-color: $secondary-color;
     color: #fff;
 
     &:hover {
       background-color: lighten($color: $secondary-color, $amount: 10);
+    }
+  }
+
+  &.btn-danger {
+    background-color: $danger-color;
+    &:hover {
+      background-color: $danger-color;
+      color: #fff;
+    }
+  }
+
+  &.btn-success {
+    color: $success-color;
+    &:hover {
+      background-color: $success-color;
+      color: #fff;
+    }
+  }
+
+  &.btn-warning {
+    color: $warning-color;
+    &:hover {
+      background-color: $warning-color;
+      color: #fff;
     }
   }
 }

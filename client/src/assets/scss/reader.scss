@@ -1,0 +1,35 @@
+.page-content {
+  .manga-h2 {
+    margin-bottom: 4rem;
+  }
+}
+
+.manga-inner {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    max-width: 80vw;
+  }
+
+  .btn {
+    padding: 1rem 2rem;
+    opacity: 0.4;
+    margin: 1rem;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+.manga-heading {
+  margin-top: -4rem;
+  margin-bottom: 2rem;
+}
+
+.manga-content {
+  margin: 5rem 1rem;
+}
