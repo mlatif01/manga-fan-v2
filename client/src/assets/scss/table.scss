@@ -62,7 +62,7 @@ table {
 }
 
 // Modal
-.add-modal-content {
+.modal-content {
   text-align: center;
   justify-content: center;
 
@@ -89,7 +89,8 @@ table {
     }
   }
 
-  input[type='text'] {
+  input[type='text'],
+  input[type='number'] {
     font-size: 1.4rem;
     width: 50%;
     border-radius: 5px;

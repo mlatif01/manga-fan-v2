@@ -6,7 +6,7 @@ const loginGoodRequest = () =>
   toast.success('Logged in Successfully', {
     position: toast.POSITION.RIGHT
   });
-const loginBadRequest = () => toast.error('Invalid Credentials');
+const loginBadRequest = error => toast.error(error);
 
 export default async function submitLogin(values, dispatch) {
   try {
@@ -18,21 +18,7 @@ export default async function submitLogin(values, dispatch) {
         payload: res.data
       });
     }
-  } catch (err) {
-    loginBadRequest();
+  } catch (error) {
+    loginBadRequest(error.response.data);
   }
-
-  // axios
-  //   .post('/api/users/login', values)
-  //   .then(res => {
-  //     if (res.status === 200) {
-  //       return res.data;
-  //     }
-  //   })
-  //   .then(resData => {
-  //     dispatch({
-  //       type: 'LOGIN',
-  //       payload: resData
-  //     });
-  //   });
 }

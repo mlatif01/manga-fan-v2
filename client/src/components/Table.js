@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 
 import postManga from '../api/postManga';
+import editLastRead from '../api/editLastRead';
 import deleteManga from '../api/deleteManga';
 import { AuthContext } from '../App';
 
@@ -32,13 +33,21 @@ export default function Table({
   };
 
   const [newManga, setNewManga] = useState('');
+  const [lastRead, setLastRead] = useState(0);
+  const [mangaId, setMangaId] = useState('');
 
   Modal.setAppElement('#root');
 
   var subtitle;
-  const [modalIsOpen, setIsOpen] = React.useState(false);
-  function openModal() {
-    setIsOpen(true);
+  const [mangaModalIsOpen, setMangaIsOpen] = React.useState(false);
+  const [lastReadModalIsOpen, setLastReadIsOpen] = React.useState(false);
+  function openMangaModal() {
+    setMangaIsOpen(true);
+  }
+
+  function openLastReadModal(mangaId) {
+    setMangaId(mangaId);
+    setLastReadIsOpen(true);
   }
 
   function afterOpenModal() {
@@ -46,15 +55,19 @@ export default function Table({
     // subtitle.style.color = '#f00';
   }
 
-  function closeModal() {
-    setIsOpen(false);
+  function closeMangaModal() {
+    setMangaIsOpen(false);
+  }
+
+  function closeLastReadModal() {
+    setLastReadIsOpen(false);
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
+    closeMangaModal();
     await postManga(newManga, authState);
     // update Manga parent view
-    closeModal();
     triggerParentDispatch();
   }
 
@@ -68,10 +81,21 @@ export default function Table({
     }
   }
 
-  function handleChange(e) {
+  function handleMangaChange(e) {
     setNewManga(e.target.value);
   }
 
+  function handleLastReadChange(e) {
+    setLastRead(e.target.value);
+  }
+
+  async function handleLastReadSubmit(e) {
+    e.preventDefault();
+    await editLastRead(lastRead, mangaId, authState);
+    // // update parent view (Manga)
+    closeLastReadModal();
+    triggerParentDispatch();
+  }
   function handleRead(mangaObj) {
     toggleIsReading(mangaObj);
   }
@@ -88,29 +112,52 @@ export default function Table({
             <th>Last Read</th>
             <th className='add-manga-th'>
               <button
-                onClick={openModal}
+                onClick={openMangaModal}
                 className='btn btn-md btn-success add-manga'
                 data-open='manga-modal'
               >
                 <i className='fas fa-plus'></i>
               </button>
               <Modal
-                isOpen={modalIsOpen}
+                isOpen={mangaModalIsOpen}
                 onAfterOpen={afterOpenModal}
-                onRequestClose={closeModal}
+                onRequestClose={closeMangaModal}
                 style={customStyles}
                 contentLabel='Add Manga Modal'
               >
-                <div className='add-modal-content'>
+                <div className='modal-content'>
                   <button
-                    onClick={closeModal}
+                    onClick={closeMangaModal}
                     className='btn btn-md btn-danger'
                   >
                     <i className='fas fa-window-close'></i>
                   </button>
                   <h1>Add Manga</h1>
                   <form onSubmit={handleSubmit}>
-                    <input type='text' onChange={handleChange} />
+                    <input type='text' onChange={handleMangaChange} />
+                    <button className='btn btn-md btn-success'>
+                      <i className='fas fa-plus-square'></i>
+                    </button>
+                  </form>
+                </div>
+              </Modal>
+              <Modal
+                isOpen={lastReadModalIsOpen}
+                onAfterOpen={afterOpenModal}
+                onRequestClose={closeLastReadModal}
+                style={customStyles}
+                contentLabel='Edit Last Read Modal'
+              >
+                <div className='modal-content'>
+                  <button
+                    onClick={closeLastReadModal}
+                    className='btn btn-md btn-danger'
+                  >
+                    <i className='fas fa-window-close'></i>
+                  </button>
+                  <h1>Edit Last Read</h1>
+                  <form onSubmit={handleLastReadSubmit}>
+                    <input type='number' onChange={handleLastReadChange} />
                     <button className='btn btn-md btn-success'>
                       <i className='fas fa-plus-square'></i>
                     </button>
@@ -130,7 +177,10 @@ export default function Table({
               </td>
               <td>{manga.releaseYear}</td>
               <td>{manga.latestChapter}</td>
-              <td onClick={() => console.log('EDIT')} className='last-read'>
+              <td
+                onClick={() => openLastReadModal(manga._id)}
+                className='last-read'
+              >
                 {manga.lastRead}
               </td>
               <td>

@@ -67,7 +67,6 @@ export default function Reader({ chapterInfo, toggleIsReading }) {
   }, [authState.token]);
 
   useEffect(() => {
-    console.log('IMAGE CHANGED');
     dispatch({
       type: 'REFRESH_PAGE'
     });
@@ -140,7 +139,7 @@ export default function Reader({ chapterInfo, toggleIsReading }) {
             <button className='btn btn-warning' onClick={() => handleRead()}>
               Back
             </button>
-            <h2>{`${chapterInfo.title} Page: ${state.page}`}</h2>
+            <h2>{`${chapterInfo.title} - Chapter: ${chapterInfo.lastRead} - Page: ${state.page}`}</h2>
           </div>
           <div className='manga-inner'>
             <button className='btn btn-danger' onClick={() => handlePrevPage()}>

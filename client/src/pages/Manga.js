@@ -110,17 +110,19 @@ export default function Manga() {
 
   return (
     <div className='page-content'>
-      <h2 className='manga-h2'>Read Your Favourite Manga</h2>
       {state.isFetching ? (
         <img src={loader} alt='loader' />
       ) : state.hasError ? (
         <span className='error'>AN ERROR HAS OCCURED</span>
       ) : !state.isReading ? (
-        <Table
-          triggerParentDispatch={triggerParentDispatch}
-          toggleIsReading={toggleIsReading}
-          mangas={state.manga}
-        />
+        <React.Fragment>
+          <h2 className='manga-h2'>Read Your Favourite Manga</h2>
+          <Table
+            triggerParentDispatch={triggerParentDispatch}
+            toggleIsReading={toggleIsReading}
+            mangas={state.manga}
+          />
+        </React.Fragment>
       ) : (
         <Reader
           toggleIsReading={toggleIsReading}
