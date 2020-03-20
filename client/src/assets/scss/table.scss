@@ -98,3 +98,40 @@ table {
     margin: 5px;
   }
 }
+
+@media screen and (max-width: 759px) {
+  .table {
+    margin-left: 6rem;
+    width: 80vw;
+    .hide-sm {
+      display: none;
+    }
+    .btn {
+      padding: 0.3rem 1.2rem;
+    }
+  }
+
+  .page-content {
+    .manga-h2 {
+      margin-left: 3rem;
+    }
+  }
+
+  .modal-content {
+    h1 {
+      font-size: 1.2rem;
+    }
+    .btn {
+      padding: 0.3rem 0.8rem;
+      margin-top: 0.5rem;
+    }
+    input[type='text'],
+    input[type='number'] {
+      font-size: 0.8rem;
+      width: 50%;
+      border-radius: 5px;
+      padding: 5px;
+      margin: 5px;
+    }
+  }
+}

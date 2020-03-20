@@ -105,9 +105,9 @@ export default function Table({
       <table className='table'>
         <thead>
           <tr>
-            <th>Author</th>
+            <th className='hide-sm'>Author</th>
             <th>Title</th>
-            <th>Release Year</th>
+            <th className='hide-sm'>Release Year</th>
             <th>Latest Chapter</th>
             <th>Last Read</th>
             <th className='add-manga-th'>
@@ -132,7 +132,7 @@ export default function Table({
                   >
                     <i className='fas fa-window-close'></i>
                   </button>
-                  <h1>Add Manga</h1>
+                  <h1>Add Manga Title</h1>
                   <form onSubmit={handleSubmit}>
                     <input type='text' onChange={handleMangaChange} />
                     <button className='btn btn-md btn-success'>
@@ -168,15 +168,15 @@ export default function Table({
           </tr>
           {mangas.map((manga, index) => (
             <tr key={index} id={manga._id}>
-              <td>{manga.author}</td>
+              <td className='hide-sm'>{manga.author}</td>
               <td
                 className='manga-title'
                 onClick={() => handleRead(mangas[index])}
               >
                 {manga.title}
               </td>
-              <td>{manga.releaseYear}</td>
-              <td>{manga.latestChapter}</td>
+              <td className='hide-sm'>{manga.releaseYear}</td>
+              <td >{manga.latestChapter}</td>
               <td
                 onClick={() => openLastReadModal(manga._id)}
                 className='last-read'

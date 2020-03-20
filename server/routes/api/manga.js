@@ -147,4 +147,33 @@ router.delete('/', verify, async (req, res) => {
   }
 });
 
+/**
+ * @route PUT api/manga
+ * @desc Edit Manga Last Read from Manga Entry
+ * @access Private
+ */
+router.put('/', verify, async (req, res) => {
+  try {
+    const entry = await Manga.updateOne(
+      // match criteria
+      {
+        userId: req.user._id,
+        mangas: { $elemMatch: { _id: req.body.mangaId } }
+      },
+
+      // update first match
+      {
+        $set: {
+          'mangas.$.lastRead': req.body.newLastRead
+        }
+      }
+    );
+    res.send({ mangaId: req.body.mangaId });
+    console.log('manga edited successfully');
+  } catch (err) {
+    console.log(err);
+    res.status(400).send(err);
+  }
+});
+
 module.exports = router;

@@ -141,6 +141,7 @@ export default function Reader({ chapterInfo, toggleIsReading }) {
             </button>
             <h2>{`${chapterInfo.title} - Chapter: ${chapterInfo.lastRead} - Page: ${state.page}`}</h2>
           </div>
+          <div className='line'></div>
           <div className='manga-inner'>
             <button className='btn btn-danger' onClick={() => handlePrevPage()}>
               Prev
@@ -153,6 +154,7 @@ export default function Reader({ chapterInfo, toggleIsReading }) {
               Next
             </button>
           </div>
+          <div className='line'></div>
         </div>
       )}
     </div>
