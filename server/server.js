@@ -13,6 +13,7 @@ const app = express();
 const authRoute = require('./routes/api/auth');
 const mangaRoute = require('./routes/api/manga');
 const mangaEdenRoute = require('./routes/api/mangaEden');
+const profileRoute = require('./routes/api/profile');
 
 // DB Config
 const db = config.get('mongoURI');
@@ -35,6 +36,7 @@ app.use(cors());
 app.use('/api/users', authRoute);
 app.use('/api/manga', mangaRoute);
 app.use('/api/manga-eden', mangaEdenRoute);
+app.use('/api/users/profile', profileRoute);
 
 // Run server on the specified port
 app.listen(port, function() {

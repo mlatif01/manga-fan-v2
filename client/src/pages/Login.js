@@ -24,9 +24,9 @@ export default function Login({ icon }) {
     <div className='page-content'>
       <h2 className='text-lg'>Sign In</h2>
       <p className='lead'>Login To Your Account</p>
-      <form className='form login' onSubmit={handleSubmit}>
+      <form className='auth-form login' onSubmit={handleSubmit}>
         <i className={icon} />
-        <div className='form-group'>
+        <div className='auth-form-group'>
           <input
             type='email'
             placeholder='Email'
@@ -40,7 +40,7 @@ export default function Login({ icon }) {
             <small className='error-text fade-in'>{errors.email}</small>
           )}
         </div>
-        <div className='form-group'>
+        <div className='auth-form-group'>
           <input
             type='password'
             placeholder='Password'

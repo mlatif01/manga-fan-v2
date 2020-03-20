@@ -52,7 +52,11 @@ router.post('/register', async (req, res) => {
   const user = new User({
     username: req.body.username,
     email: req.body.email,
-    password: hashedPassword
+    password: hashedPassword,
+    profile: {
+      bio: '',
+      instagram: ''
+    }
   });
 
   try {
@@ -92,7 +96,8 @@ router.post('/login', async (req, res) => {
   var user = {
     id: user._id,
     username: user.username,
-    email: user.email
+    email: user.email,
+    profile: user.profile
   };
 
   res.send({ token, user });

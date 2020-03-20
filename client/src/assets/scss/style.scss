@@ -65,6 +65,12 @@ h2 {
   margin-bottom: 1rem;
 }
 
+.text-md {
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
 .text-lg {
   font-size: 3rem;
   line-height: 1.2;
@@ -136,6 +142,54 @@ h2 {
     &:hover {
       background-color: $warning-color;
       color: #fff;
+    }
+  }
+}
+
+// Manga Page
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+}
+
+// Dashboard Page
+.dashboard {
+  max-width: 100%;
+  margin: 2rem 3rem;
+  display: grid;
+  grid-template-areas:
+    'profile profile profile'
+    'friends manga manga'
+    'friends manga manga';
+  grid-gap: 4rem;
+
+  .friends {
+    grid-area: friends;
+  }
+
+  .manga {
+    grid-area: manga;
+  }
+
+  .profile {
+    grid-area: profile;
+
+    h2 {
+      margin-top: 1rem;
+    }
+
+    .line {
+      margin: 0 2rem;
+    }
+  }
+
+  .card {
+    border-radius: 10px;
+    background-color: $light-color;
+    i {
+      font-size: 6rem;
+      color: $text-color;
     }
   }
 }

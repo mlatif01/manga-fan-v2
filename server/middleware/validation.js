@@ -56,6 +56,16 @@ const mangaValidation = data => {
   return schema.validate(data);
 };
 
+// Profile Validation
+const profileValidation = data => {
+  const schema = Joi.object({
+    bio: Joi.string(),
+    instagram: Joi.string().uri()
+  });
+  return schema.validate(data);
+};
+
 module.exports.registerValidation = registerValidation;
 module.exports.loginValidation = loginValidation;
 module.exports.mangaValidation = mangaValidation;
+module.exports.profileValidation = profileValidation;

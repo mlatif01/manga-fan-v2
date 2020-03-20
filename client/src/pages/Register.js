@@ -26,9 +26,9 @@ export default function Register({ icon }) {
     <div className='page-content'>
       <h2 className='text-lg'>Sign Up</h2>
       <p className='lead'>Create Your Account</p>
-      <form className='form' onSubmit={handleSubmit}>
+      <form className='auth-form' onSubmit={handleSubmit}>
         <i className={icon} />
-        <div className='form-group'>
+        <div className='auth-form-group'>
           <input
             type='text'
             placeholder='Username'
@@ -42,7 +42,7 @@ export default function Register({ icon }) {
             <small className='error-text fade-in'>{errors.username}</small>
           )}
         </div>
-        <div className='form-group'>
+        <div className='auth-form-group'>
           <input
             type='email'
             placeholder='Email'
@@ -56,7 +56,7 @@ export default function Register({ icon }) {
             <small className='error-text fade-in'>{errors.email}</small>
           )}
         </div>
-        <div className='form-group'>
+        <div className='auth-form-group'>
           <input
             type='password'
             placeholder='Password'
@@ -70,7 +70,7 @@ export default function Register({ icon }) {
             <small className='error-text fade-in'>{errors.password}</small>
           )}
         </div>
-        <div className='form-group'>
+        <div className='auth-form-group'>
           <input
             type='password'
             placeholder='Confirm Password'

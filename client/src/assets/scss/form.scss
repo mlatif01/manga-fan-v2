@@ -1,4 +1,4 @@
-.form {
+.auth-form {
   background-color: $register-color;
   margin: 3rem 30%;
   padding: 4rem;
@@ -71,6 +71,44 @@
   }
 }
 
-.form.login {
+.auth-form.login {
   background-color: $login-color;
+}
+
+.profile-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 2rem;
+
+  small {
+    display: block;
+  }
+
+  &-group {
+    margin: 2.2rem 0;
+  }
+
+  input[type='text'],
+  input[type='number'],
+  textarea {
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    margin: 0 auto;
+    height: 20px;
+    width: 50%;
+    padding: 0.4rem;
+    font-size: 1.2rem;
+  }
+
+  textarea {
+    height: 20px;
+  }
+
+  .btn {
+    position: relative;
+    margin: auto auto;
+    margin-right: -4rem;
+    margin-bottom: 1rem;
+  }
 }

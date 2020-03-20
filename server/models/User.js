@@ -23,6 +23,20 @@ const userSchema = new Schema({
   register_date: {
     type: Date,
     default: Date.now
+  },
+  profile: {
+    bio: {
+      type: String,
+      required: false,
+      min: 0,
+      max: 255
+    },
+    instagram: {
+      type: String,
+      required: false,
+      min: 0,
+      max: 255
+    }
   }
 });
 

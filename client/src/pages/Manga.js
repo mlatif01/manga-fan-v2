@@ -111,7 +111,7 @@ export default function Manga() {
   return (
     <div className='page-content'>
       {state.isFetching ? (
-        <img src={loader} alt='loader' />
+        <img className='loader' src={loader} alt='loader' />
       ) : state.hasError ? (
         <span className='error'>AN ERROR HAS OCCURED</span>
       ) : !state.isReading ? (

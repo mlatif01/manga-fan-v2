@@ -19,7 +19,7 @@ export const AuthContext = React.createContext();
 // Reducer Hook
 const INITIAL_STATE = {
   redirectToLogin: false,
-  isAuthenticated: true,
+  isAuthenticated: false,
   user: null,
   token: null
 };
@@ -45,6 +45,13 @@ const reducer = (state, action) => {
       return {
         ...state,
         redirectToLogin: true
+      };
+    case 'UPDATE_PROFILE':
+      return {
+        ...state,
+        user: {
+          profile: action.payload.profile
+        }
       };
     default:
       return state;
@@ -162,7 +169,7 @@ function App() {
               <React.Fragment>
                 <Route
                   path='/dashboard'
-                  render={props => <Dashboard {...props} />}
+                  render={props => <Dashboard {...props} user={state.user} />}
                 />
                 <Route path='/manga' render={props => <Manga {...props} />} />
               </React.Fragment>
