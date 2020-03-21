@@ -18,8 +18,8 @@ router.put('/', verify, async (req, res) => {
   const user = await User.findById(req.user);
 
   // Validate the data before we create a user
-  // const { error } = profileValidation(req.body);
-  // if (error) return res.status(400).send(error.details[0].message);
+  const { error } = profileValidation(req.body);
+  if (error) return res.status(400).send(error.details[0].message);
 
   try {
     const entry = await user.updateOne(

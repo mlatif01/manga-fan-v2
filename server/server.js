@@ -14,6 +14,7 @@ const authRoute = require('./routes/api/auth');
 const mangaRoute = require('./routes/api/manga');
 const mangaEdenRoute = require('./routes/api/mangaEden');
 const profileRoute = require('./routes/api/profile');
+const otakuRoute = require('./routes/api/otaku');
 
 // DB Config
 const db = config.get('mongoURI');
@@ -37,6 +38,7 @@ app.use('/api/users', authRoute);
 app.use('/api/manga', mangaRoute);
 app.use('/api/manga-eden', mangaEdenRoute);
 app.use('/api/users/profile', profileRoute);
+app.use('/api/users/otaku', otakuRoute);
 
 // Run server on the specified port
 app.listen(port, function() {

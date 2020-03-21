@@ -14,12 +14,13 @@ import Register from './pages/Register';
 import ResponsiveNavigation from './components/ResponsiveNavigation';
 import Dashboard from './pages/Dashboard';
 import Manga from './pages/Manga';
+import Otaku from './pages/Otaku';
 
 export const AuthContext = React.createContext();
 // Reducer Hook
 const INITIAL_STATE = {
   redirectToLogin: false,
-  isAuthenticated: false,
+  isAuthenticated: true,
   user: null,
   token: null
 };
@@ -100,6 +101,12 @@ function App() {
       path: '/manga',
       icon: 'fas fa-book',
       hoverBackground: '#33d5ff'
+    },
+    {
+      text: 'Otaku',
+      path: '/otaku',
+      icon: 'fas fa-users',
+      hoverBackground: '#E800FF'
     }
   ];
 
@@ -172,6 +179,7 @@ function App() {
                   render={props => <Dashboard {...props} user={state.user} />}
                 />
                 <Route path='/manga' render={props => <Manga {...props} />} />
+                <Route path='/otaku' render={props => <Otaku {...props} />} />
               </React.Fragment>
               <Route component={NoMatchPage} />
             </Switch>

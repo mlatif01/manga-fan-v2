@@ -14,12 +14,12 @@ export default function ProfileCard({ user }) {
   const [isSubmitting, setSubmitting] = useState(false);
   const [values, setValues] = useState(INITIAL_STATE);
 
-  useEffect(() => {
-    setValues({
-      bio: user.profile.bio,
-      instagram: user.profile.instagram
-    });
-  }, []);
+  // useEffect(() => {
+  //   setValues({
+  //     bio: user.profile.bio,
+  //     instagram: user.profile.instagram
+  //   });
+  // }, []);
 
   const handleChange = e => {
     setValues({

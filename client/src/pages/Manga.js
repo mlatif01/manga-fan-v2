@@ -87,15 +87,18 @@ export default function Manga() {
       });
   };
 
+  // Fetch manga when the state of the token is updated
   useEffect(() => {
     fetchManga();
   }, [authState.token]);
 
+  // used to refrech parent component when Table is updated
   const triggerParentDispatch = () => {
     fetchManga();
     console.log('fetching');
   };
 
+  // Toggles Table and Reader component
   const toggleIsReading = mangaObj => {
     !state.isReading
       ? dispatch({
