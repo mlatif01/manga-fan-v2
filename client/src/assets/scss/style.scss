@@ -196,10 +196,11 @@ h2 {
 
 // Otaku Page
 .otaku-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  margin: 0 auto;
   .otaku-card {
-    margin: 2rem;
+    width: 400px;
+    margin: 2rem 2rem;
 
     .card {
       &:hover {
