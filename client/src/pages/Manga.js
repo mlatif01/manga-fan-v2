@@ -92,7 +92,7 @@ export default function Manga() {
     fetchManga();
   }, [authState.token]);
 
-  // used to refrech parent component when Table is updated
+  // used to refresh parent component when Table is updated
   const triggerParentDispatch = () => {
     fetchManga();
     console.log('fetching');

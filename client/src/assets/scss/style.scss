@@ -87,7 +87,7 @@ h2 {
 .line {
   height: 1px;
   background: #ccc;
-  margin: 1.5rem 0;
+  margin: 0 2rem;
 }
 
 // buttons
@@ -142,6 +142,22 @@ h2 {
     &:hover {
       background-color: $warning-color;
       color: #fff;
+    }
+  }
+
+  &.btn-info {
+    color: $info-color;
+    &:hover {
+      background-color: $info-color;
+      color: #fff;
+    }
+  }
+
+  &.btn-friend {
+    color: #fff;
+    background-color: $primary-color;
+    &:hover {
+      opacity: 0.7;
     }
   }
 }
@@ -204,7 +220,9 @@ h2 {
 
     .card {
       &:hover {
-        opacity: 0.5;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.76);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.76);
+        box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.76);
       }
     }
 
@@ -232,6 +250,100 @@ h2 {
         align-items: center;
         font-size: 1rem;
         text-align: left;
+      }
+    }
+  }
+}
+
+.otaku-profile {
+  .heading {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    width: 50rem;
+    justify-content: center;
+    margin: 2rem auto;
+    background-color: $light-color;
+
+    p {
+      margin-top: 1rem;
+    }
+
+    .head {
+      position: relative;
+      display: flex;
+      h1 {
+        margin: 0 auto;
+        padding: 1rem;
+      }
+
+      .btn.friend {
+        position: absolute;
+        margin: 2rem 2rem;
+      }
+    }
+
+    .avatar {
+      margin: 2rem 0;
+      width: 20rem;
+      border-radius: 15rem;
+    }
+
+    .social {
+      display: flex;
+      justify-content: space-evenly;
+
+      .btn {
+        &.message {
+          width: 10rem;
+          height: 3rem;
+          margin: auto 0;
+        }
+        &.insta:hover {
+          opacity: 0.7;
+        }
+      }
+    }
+  }
+
+  .otaku-profile-content {
+    display: flex;
+    margin: 0 2rem;
+
+    .fav-manga,
+    .friends-list {
+      h2 {
+        margin-top: 1rem;
+      }
+
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      width: 40rem;
+      justify-content: center;
+      margin: 2rem auto;
+      background-color: $light-color;
+
+      li {
+        list-style: none;
+        justify-content: center;
+        align-items: center;
+        font-size: 1rem;
+        text-align: left;
+        margin: 1rem 1rem;
+
+        span {
+          margin-left: 1rem;
+          i {
+            font-size: 2rem;
+          }
+          p {
+            margin-left: 1rem;
+            display: inline-block;
+          }
+        }
+
+        .btn {
+          float: right;
+        }
       }
     }
   }

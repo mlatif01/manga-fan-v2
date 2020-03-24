@@ -4,12 +4,14 @@ import loader from '../assets/img/loader.gif';
 import { AuthContext } from '../App';
 
 import OtakuCard from '../components/OtakuCard';
+import OtakuProfile from '../components/OtakuProfile';
 
 const INITIAL_STATE = {
   otaku: [],
   isFetching: false,
   hasError: false,
-  isViewingOtaku: false
+  isViewingOtakuProfile: false,
+  otakuProfile: {}
 };
 
 const reducer = (state, action) => {
@@ -32,16 +34,16 @@ const reducer = (state, action) => {
         hasError: true,
         isFetching: false
       };
-    case 'VIEWING_OTAKU_PROFILE':
+    case 'VIEW_OTAKU_PROFILE':
       return {
         ...state,
-        isViewingOtaku: true
-        // chapterInfo: action.payload
+        isViewingOtakuProfile: true,
+        otakuProfile: action.payload
       };
-    case 'NOT_VIEWING_OTAKU_PROFILE':
+    case 'NOT_VIEW_OTAKU_PROFILE':
       return {
         ...state,
-        isViewingOtaku: false
+        isViewingOtakuProfile: false
       };
     default:
       return state;
@@ -88,6 +90,19 @@ export default function Otaku() {
     fetchOtaku();
   }, [authState.token]);
 
+  // Toggles Table and Reader component
+  const toggleIsViewingOtakuProfile = otakuProfile => {
+    !state.isViewingOtakuProfile
+      ? dispatch({
+          type: 'VIEW_OTAKU_PROFILE',
+          payload: otakuProfile
+        })
+      : dispatch({
+          type: 'NOT_VIEW_OTAKU_PROFILE',
+          payload: otakuProfile
+        });
+  };
+
   return (
     <div className='page-content'>
       <h1>OTAKU</h1>
@@ -95,11 +110,30 @@ export default function Otaku() {
         <i className='fab fa-connectdevelop fa-1x'></i> Browse and connect with
         other manga fans!
       </p>
-      <div className='otaku-content'>
-        {state.otaku.map((otakuProfile, index) => (
-          <OtakuCard key={index} otakuProfile={otakuProfile} />
-        ))}
-      </div>
+      {state.isFetching ? (
+        <img className='loader' src={loader} alt='loader' />
+      ) : state.hasError ? (
+        <span className='error'>AN ERROR HAS OCCURED</span>
+      ) : !state.isViewingOtakuProfile ? (
+        <React.Fragment>
+          <div className='otaku-content'>
+            {state.otaku.map((otakuProfile, index) => (
+              <div
+                key={index}
+                className='otaku-card'
+                onClick={() => toggleIsViewingOtakuProfile(otakuProfile)}
+              >
+                <OtakuCard otakuProfile={otakuProfile} />
+              </div>
+            ))}
+          </div>
+        </React.Fragment>
+      ) : (
+        <OtakuProfile
+          toggleIsViewingOtakuProfile={toggleIsViewingOtakuProfile}
+          otakuProfile={state.otakuProfile}
+        />
+      )}
     </div>
   );
 }

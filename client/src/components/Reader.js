@@ -136,7 +136,7 @@ export default function Reader({ chapterInfo, toggleIsReading }) {
       ) : (
         <div className='manga-content' onKeyPress={handleKeyPress}>
           <div className='manga-heading'>
-            <button className='btn btn-warning' onClick={() => handleRead()}>
+            <button className='btn btn-info' onClick={() => handleRead()}>
               Back
             </button>
             <h2>{`${chapterInfo.title} - Chapter: ${chapterInfo.lastRead} - Page: ${state.page}`}</h2>
