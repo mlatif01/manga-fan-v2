@@ -186,6 +186,38 @@ h2 {
 
   .manga {
     grid-area: manga;
+
+    h2 {
+      margin-top: 1rem;
+    }
+
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: $light-color;
+
+    li {
+      list-style: none;
+      justify-content: center;
+      align-items: center;
+      font-size: 1rem;
+      text-align: left;
+      margin: 1rem 1rem;
+
+      span {
+        margin-left: 1rem;
+        i {
+          font-size: 2rem;
+        }
+        p {
+          margin-left: 1rem;
+          display: inline-block;
+        }
+      }
+
+      .btn {
+        float: right;
+      }
+    }
   }
 
   .profile {

@@ -71,7 +71,7 @@ export default function ProfileCard({ user }) {
           disabled={isSubmitting}
           type='submit'
           value='Register'
-          className='btn btn-primary btn-sm'
+          className='btn btn-primary btn-md'
         >
           Update Profile
         </button>

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import ProfileCard from '../components/ProfileCard';
+import MangaCard from '../components/MangaCard';
 
 export default function Dashboard({ user }) {
   // const username = user.username;
@@ -16,7 +17,7 @@ export default function Dashboard({ user }) {
       <i className='fas fa-user fa-8x' style={avatar}></i>
       <div className='dashboard'>
         <div className='friends card'>FRIENDS GO HERE</div>
-        <div className='manga card'>TOP 3 FAV MANGA GO HERE</div>
+        <MangaCard user={user} />
         <ProfileCard user={user} />
       </div>
     </div>
