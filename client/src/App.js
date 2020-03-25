@@ -20,7 +20,7 @@ export const AuthContext = React.createContext();
 // Reducer Hook
 const INITIAL_STATE = {
   redirectToLogin: false,
-  isAuthenticated: true,
+  isAuthenticated: false,
   user: null,
   token: null
 };
