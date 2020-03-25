@@ -5,10 +5,11 @@ const verify = require('../../middleware/verifyToken');
 // Models
 const User = require('../../models/User');
 const Manga = require('../../models/Manga');
+const Friend = require('../../models/Friend');
 
 /**
  * @route GET api/users/otaku
- * @desc Get all usernames, profiles and their fav manga.
+ * @desc Get all usernames, profiles, fav manga and friends list.
  * @access Private
  */
 router.get('/', verify, async (req, res) => {
@@ -19,7 +20,8 @@ router.get('/', verify, async (req, res) => {
       userId: user._id,
       username: user.username,
       profile: user.profile,
-      favManga: []
+      favManga: [],
+      friends: []
     };
     arrOfUsers.push(userObj);
   });
@@ -33,6 +35,17 @@ router.get('/', verify, async (req, res) => {
     allFavManga.forEach(favManga => {
       if (user.userId.equals(favManga.userId)) {
         user.favManga = favManga.mangas;
+      }
+    });
+  });
+
+  // get all friends details
+  const allFriends = await Friend.find();
+
+  arrOfUsers.forEach(user => {
+    allFriends.forEach(friend => {
+      if (user.userId.equals(friend.userId)) {
+        user.friends = friend.friends;
       }
     });
   });

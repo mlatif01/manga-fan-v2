@@ -1,6 +1,7 @@
 import React from 'react';
 
 import postManga from '../api/postManga';
+import postFriend from '../api/postFriend';
 
 export default function OtakuProfile({
   otakuProfile,
@@ -13,6 +14,10 @@ export default function OtakuProfile({
 
   async function addManga(newManga) {
     await postManga(newManga);
+  }
+
+  async function addFriend(newFriend, newFriendId) {
+    await postFriend(newFriend, newFriendId);
   }
 
   return (
@@ -60,18 +65,22 @@ export default function OtakuProfile({
             </li>
           ))}
         </div>
-        {/* CHANGE TO FRIENDS LIST*/}
         <div className='friends-list'>
           <h2 className='text-md'>Friends</h2>
           <div className='line'></div>
-          {otakuProfile.favManga.map((manga, index) => (
-            <li key={manga.author}>
+          {otakuProfile.friends.map((friend, index) => (
+            <li key={index}>
               <span>
                 {' '}
-                <i class='fas fa-user'></i>
-                <p className='lead'>{manga.author}</p>
+                <i className='fas fa-user'></i>
+                <p className='lead'>{friend.name}</p>
               </span>
-              <button className='btn btn-friend'>Add Friend</button>
+              <button
+                onClick={() => addFriend(friend.name, friend.friendId)}
+                className='btn btn-friend'
+              >
+                Add Friend
+              </button>
             </li>
           ))}
         </div>
