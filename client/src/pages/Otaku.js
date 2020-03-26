@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Redirect, Switch, Route } from 'react-router-dom';
 
 import loader from '../assets/img/loader.gif';
 import { AuthContext } from '../App';
@@ -129,10 +130,23 @@ export default function Otaku() {
           </div>
         </React.Fragment>
       ) : (
-        <OtakuProfile
-          toggleIsViewingOtakuProfile={toggleIsViewingOtakuProfile}
-          otakuProfile={state.otakuProfile}
-        />
+        <React.Fragment>
+          <Redirect to={`/otaku/${state.otakuProfile.username}`} />
+          <Switch>
+            <React.Fragment>
+              <Route
+                path='/otaku'
+                render={props => (
+                  <OtakuProfile
+                    {...props}
+                    otakuProfile={state.otakuProfile}
+                    toggleIsViewingOtakuProfile={toggleIsViewingOtakuProfile}
+                  />
+                )}
+              />
+            </React.Fragment>
+          </Switch>
+        </React.Fragment>
       )}
     </div>
   );

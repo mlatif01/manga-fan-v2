@@ -2,14 +2,17 @@ import React from 'react';
 
 import postManga from '../api/postManga';
 import postFriend from '../api/postFriend';
+import { useHistory } from 'react-router-dom';
 
 export default function OtakuProfile({
   otakuProfile,
   toggleIsViewingOtakuProfile
 }) {
+  let history = useHistory();
   const handleGoBack = () => {
     console.log('Go back');
     toggleIsViewingOtakuProfile();
+    history.push('/otaku');
   };
 
   async function addManga(newManga) {

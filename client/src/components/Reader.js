@@ -143,7 +143,7 @@ export default function Reader({ chapterInfo, toggleIsReading }) {
           </div>
           <div className='line'></div>
           <div className='manga-inner'>
-            <button className='btn btn-danger' onClick={() => handlePrevPage()}>
+            <button className='btn btn-info' onClick={() => handlePrevPage()}>
               Prev
             </button>
             <img src={state.CDN + state.currentImg} />

@@ -199,6 +199,11 @@ h2 {
       text-align: left;
       margin: 1rem 1rem;
 
+      &:hover {
+        opacity: 0.4;
+        cursor: pointer;
+      }
+
       span {
         margin-left: 1rem;
         i {
