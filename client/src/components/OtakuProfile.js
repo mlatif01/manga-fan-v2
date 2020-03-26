@@ -19,8 +19,8 @@ export default function OtakuProfile({
     await postManga(newManga);
   }
 
-  async function addFriend(newFriend, newFriendId) {
-    await postFriend(newFriend, newFriendId);
+  async function addFriend(newFriendName, newFriendId) {
+    await postFriend(newFriendName, newFriendId);
   }
 
   return (
@@ -31,7 +31,12 @@ export default function OtakuProfile({
       <div className='heading'>
         <div className='head'>
           <h1>{otakuProfile.username}</h1>
-          <button className='btn btn-md btn-friend friend'>Add Friend</button>
+          <button
+            className='btn btn-md btn-friend friend'
+            onClick={() => addFriend(otakuProfile.username, otakuProfile.userId)}
+          >
+            Add Friend
+          </button>
         </div>
         <img
           src='https://cdn.pixabay.com/photo/2016/03/31/14/47/avatar-1292817_960_720.png'

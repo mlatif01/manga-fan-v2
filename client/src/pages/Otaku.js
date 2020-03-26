@@ -133,18 +133,17 @@ export default function Otaku() {
         <React.Fragment>
           <Redirect to={`/otaku/${state.otakuProfile.username}`} />
           <Switch>
-            <React.Fragment>
-              <Route
-                path='/otaku'
-                render={props => (
-                  <OtakuProfile
-                    {...props}
-                    otakuProfile={state.otakuProfile}
-                    toggleIsViewingOtakuProfile={toggleIsViewingOtakuProfile}
-                  />
-                )}
-              />
-            </React.Fragment>
+            <Route
+              exact
+              path={`/otaku/:otakuId`}
+              render={props => (
+                <OtakuProfile
+                  {...props}
+                  otakuProfile={state.otakuProfile}
+                  toggleIsViewingOtakuProfile={toggleIsViewingOtakuProfile}
+                />
+              )}
+            />
           </Switch>
         </React.Fragment>
       )}

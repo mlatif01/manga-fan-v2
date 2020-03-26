@@ -179,7 +179,7 @@ function App() {
                   render={props => <Dashboard {...props} user={state.user} />}
                 />
                 <Route path='/manga' render={props => <Manga {...props} />} />
-                <Route path='/otaku' render={props => <Otaku {...props} />} />
+                <Route path={'/otaku'} render={props => <Otaku {...props} />} />
               </React.Fragment>
               <Route component={NoMatchPage} />
             </Switch>
