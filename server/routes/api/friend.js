@@ -9,7 +9,7 @@ const Friend = require('../../models/Friend');
 
 /**
  * @route GET api/users/friends
- * @desc Get User's Manga List
+ * @desc Get User's Friend List
  * @access Private
  */
 router.get('/', verify, async (req, res) => {

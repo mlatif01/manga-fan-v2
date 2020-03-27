@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import getUsersFriends from '../api/getUsersFriends';
 import getOtakuProfile from '../api/getOtakuProfile';
-import { useHistory, Redirect, Switch, Route } from 'react-router-dom';
+import { useHistory, Redirect, Switch, Route, Link } from 'react-router-dom';
+import { AuthContext } from '../App';
 
 import OtakuProfile from '../components/OtakuProfile';
 
@@ -10,6 +11,9 @@ export default function FriendCard({ user }) {
   const [friends, setFriends] = useState(['']);
   const [viewProfile, setViewProfile] = useState(false);
   const [friendOtakuProfile, setFriendOtakuProfile] = useState('');
+  const { state: authState, handleSetOtakuProfile } = React.useContext(
+    AuthContext
+  );
 
   let history = useHistory();
 
@@ -21,11 +25,22 @@ export default function FriendCard({ user }) {
     });
   }, []);
 
+  const viewOtakuProfileOld = friendId => {
+    // fetch otaku profile
+    getOtakuProfile(friendId).then(res => {
+      console.log(res.data);
+      setFriendOtakuProfile(res.data);
+      setViewProfile(true);
+    });
+  };
+
   const viewOtakuProfile = friendId => {
     // fetch otaku profile
     getOtakuProfile(friendId).then(res => {
       console.log(res.data);
       setFriendOtakuProfile(res.data);
+      handleSetOtakuProfile(res.data);
+      history.push('/dashboard');
       setViewProfile(true);
     });
   };
@@ -37,20 +52,34 @@ export default function FriendCard({ user }) {
           <h2 className='text-md'>Friends</h2>
           <div className='line'></div>
           {friends.slice(0, 5).map((friend, index) => (
-            <li key={index} onClick={() => viewOtakuProfile(friend.friendId)}>
-              <span>
-                {' '}
-                <i className='fas fa-user'></i>
-                <p className='lead'>{friend.name}</p>
-              </span>
-            </li>
+            <React.Fragment key={index}>
+              {/* <Link
+                onClick={() => viewOtakuProfile(friend.friendId)}
+                to={`/otaku/${friend.name}`}
+              >
+                Hello
+              </Link> */}
+              <li key={index} onClick={() => viewOtakuProfile(friend.friendId)}>
+                <span>
+                  {' '}
+                  <i className='fas fa-user'></i>
+                  <p className='lead'>{friend.name}</p>
+                </span>
+              </li>
+            </React.Fragment>
           ))}
         </div>
       ) : (
         <React.Fragment>
-          <Redirect to={`/otaku/${friendOtakuProfile.username}`} />
           <Switch>
             <Route
+              exact
+              path={`/dashboard`}
+              render={() => (
+                <Redirect to={`/otaku/${friendOtakuProfile.username}`} />
+              )}
+            />
+            {/* <Route
               exact
               path={`/otaku/:otakuId`}
               render={props => (
@@ -60,7 +89,7 @@ export default function FriendCard({ user }) {
                   toggleIsViewingOtakuProfile={true}
                 />
               )}
-            />
+            /> */}
           </Switch>
         </React.Fragment>
       )}

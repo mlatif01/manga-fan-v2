@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { Redirect, Switch, Route } from 'react-router-dom';
+import { Redirect, Switch, Route, Link } from 'react-router-dom';
 
 import loader from '../assets/img/loader.gif';
 import { AuthContext } from '../App';
+import { useHistory } from 'react-router-dom';
 
 import OtakuCard from '../components/OtakuCard';
-import OtakuProfile from '../components/OtakuProfile';
 
 const INITIAL_STATE = {
   otaku: [],
@@ -54,7 +54,11 @@ const reducer = (state, action) => {
 export default function Otaku() {
   // const { state: authState } = React.useContext(AuthContext);
   const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
-  const { state: authState } = React.useContext(AuthContext);
+  const { state: authState, handleSetOtakuProfile } = React.useContext(
+    AuthContext
+  );
+
+  let history = useHistory();
 
   const fetchOtaku = () => {
     dispatch({
@@ -92,16 +96,26 @@ export default function Otaku() {
   }, [authState.token]);
 
   // Toggles Table and Reader component
-  const toggleIsViewingOtakuProfile = otakuProfile => {
-    !state.isViewingOtakuProfile
-      ? dispatch({
-          type: 'VIEW_OTAKU_PROFILE',
-          payload: otakuProfile
-        })
-      : dispatch({
-          type: 'NOT_VIEW_OTAKU_PROFILE',
-          payload: otakuProfile
-        });
+  // const toggleIsViewingOtakuProfile = otakuProfile => {
+  //   !state.isViewingOtakuProfile
+  //     ? dispatch({
+  //         type: 'VIEW_OTAKU_PROFILE',
+  //         payload: otakuProfile
+  //       })
+  //     : dispatch({
+  //         type: 'NOT_VIEW_OTAKU_PROFILE',
+  //         payload: otakuProfile
+  //       });
+  // };
+
+  // View Otaku Profile
+  const viewOtakuProfile = otakuProfile => {
+    handleSetOtakuProfile(otakuProfile);
+    history.push('/otaku');
+    dispatch({
+      type: 'VIEW_OTAKU_PROFILE',
+      payload: otakuProfile
+    });
   };
 
   return (
@@ -119,21 +133,35 @@ export default function Otaku() {
         <React.Fragment>
           <div className='otaku-content'>
             {state.otaku.map((otakuProfile, index) => (
-              <div
-                key={index}
-                className='otaku-card'
-                onClick={() => toggleIsViewingOtakuProfile(otakuProfile)}
-              >
-                <OtakuCard otakuProfile={otakuProfile} />
-              </div>
+              <React.Fragment key={index}>
+                {/* <Link
+                  onClick={() => toggleIsViewingOtakuProfile(otakuProfile)}
+                  to={`/otaku/${otakuProfile.username}`}
+                >
+                  Hello
+                </Link> */}
+                <div
+                  key={index}
+                  className='otaku-card'
+                  onClick={() => viewOtakuProfile(otakuProfile)}
+                >
+                  <OtakuCard otakuProfile={otakuProfile} />
+                </div>
+              </React.Fragment>
             ))}
           </div>
         </React.Fragment>
       ) : (
         <React.Fragment>
-          <Redirect to={`/otaku/${state.otakuProfile.username}`} />
           <Switch>
             <Route
+              exact
+              path={`/otaku`}
+              render={() => (
+                <Redirect to={`/otaku/${state.otakuProfile.username}`} />
+              )}
+            />
+            {/* <Route
               exact
               path={`/otaku/:otakuId`}
               render={props => (
@@ -143,7 +171,7 @@ export default function Otaku() {
                   toggleIsViewingOtakuProfile={toggleIsViewingOtakuProfile}
                 />
               )}
-            />
+            /> */}
           </Switch>
         </React.Fragment>
       )}

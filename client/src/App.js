@@ -15,6 +15,7 @@ import ResponsiveNavigation from './components/ResponsiveNavigation';
 import Dashboard from './pages/Dashboard';
 import Manga from './pages/Manga';
 import Otaku from './pages/Otaku';
+import OtakuProfile from './components/OtakuProfile';
 
 export const AuthContext = React.createContext();
 // Reducer Hook
@@ -22,7 +23,8 @@ const INITIAL_STATE = {
   redirectToLogin: false,
   isAuthenticated: true,
   user: null,
-  token: null
+  token: null,
+  otakuProfile: null
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -53,6 +55,11 @@ const reducer = (state, action) => {
         user: {
           profile: action.payload.profile
         }
+      };
+    case 'SET_OTAKU_PROFILE':
+      return {
+        ...state,
+        otakuProfile: action.payload
       };
     default:
       return state;
@@ -131,11 +138,20 @@ function App() {
     });
   };
 
+  const handleSetOtakuProfile = otakuProfile => {
+    console.log(otakuProfile);
+    dispatch({
+      type: 'SET_OTAKU_PROFILE',
+      payload: otakuProfile
+    });
+  };
+
   const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
-  console.log(state);
 
   return (
-    <AuthContext.Provider value={{ state, dispatch, handleLogout }}>
+    <AuthContext.Provider
+      value={{ state, dispatch, handleLogout, handleSetOtakuProfile }}
+    >
       <div className='App'>
         <Router>
           <ResponsiveNavigation
@@ -179,7 +195,22 @@ function App() {
                   render={props => <Dashboard {...props} user={state.user} />}
                 />
                 <Route path='/manga' render={props => <Manga {...props} />} />
-                <Route path={'/otaku'} render={props => <Otaku {...props} />} />
+                <Route
+                  exact
+                  path={'/otaku'}
+                  render={props => <Otaku {...props} />}
+                />
+                <Route
+                  // exact
+                  path={`/otaku/:otakuId`}
+                  render={props => (
+                    <OtakuProfile
+                      {...props}
+                      otakuProfile={state.otakuProfile}
+                      // toggleIsViewingOtakuProfile={toggleIsViewingOtakuProfile}
+                    />
+                  )}
+                />
               </React.Fragment>
               <Route component={NoMatchPage} />
             </Switch>
