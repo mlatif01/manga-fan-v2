@@ -4,6 +4,8 @@ import Modal from 'react-modal';
 import postManga from '../api/postManga';
 import editLastRead from '../api/editLastRead';
 import deleteManga from '../api/deleteManga';
+import Autocomplete from '../components/Autocomplete';
+
 import { AuthContext } from '../App';
 
 const INITIAL_STATE = {
@@ -35,6 +37,29 @@ export default function Table({
   const [newManga, setNewManga] = useState('');
   const [lastRead, setLastRead] = useState(0);
   const [mangaId, setMangaId] = useState('');
+  const [mangaList, setMangaList] = useState('');
+  const [mangaListFetched, setMangaListFetched] = useState(false);
+
+  const fetchMangaNames = () => {
+    fetch('/api/manga-eden/names', {
+      headers: {
+        Authorization: JSON.parse(localStorage.getItem('token'))
+      }
+    })
+      .then(res => {
+        return res.json();
+      })
+      .then(resJson => {
+        console.log(resJson);
+        setMangaList(resJson);
+        setMangaListFetched(true);
+      });
+  };
+
+  // Fetch all manga names for adding mangas to the table
+  useEffect(() => {
+    fetchMangaNames();
+  }, []);
 
   Modal.setAppElement('#root');
 
@@ -100,6 +125,10 @@ export default function Table({
     toggleIsReading(mangaObj);
   }
 
+  function triggerNewMangaUpdate(mangaTitle) {
+    setNewManga(mangaTitle);
+  }
+
   return (
     <React.Fragment>
       <table className='table'>
@@ -134,7 +163,25 @@ export default function Table({
                   </button>
                   <h1>Add Manga Title</h1>
                   <form onSubmit={handleSubmit}>
-                    <input type='text' onChange={handleMangaChange} />
+                    {/* <input
+                      placeholder='Add a manga to your list'
+                      type='text'
+                      onChange={handleMangaChange}
+                      onChange={filterManga}
+                    /> */}
+
+                    {mangaListFetched ? (
+                      <Autocomplete
+                        suggestions={mangaList}
+                        triggerNewMangaUpdate={triggerNewMangaUpdate}
+                      />
+                    ) : (
+                      <h2 style={{ marginBottom: '1rem' }}>
+                        {' '}
+                        Please wait... Fetching Manga List
+                      </h2>
+                    )}
+
                     <button className='btn btn-md btn-success'>
                       <i className='fas fa-plus-square'></i>
                     </button>
@@ -176,7 +223,7 @@ export default function Table({
                 {manga.title}
               </td>
               <td className='hide-sm'>{manga.releaseYear}</td>
-              <td >{manga.latestChapter}</td>
+              <td>{manga.latestChapter}</td>
               <td
                 onClick={() => openLastReadModal(manga._id)}
                 className='last-read'

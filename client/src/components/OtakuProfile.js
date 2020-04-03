@@ -23,6 +23,10 @@ export default function OtakuProfile({ otakuProfile }) {
     await postFriend(newFriendName, newFriendId);
   }
 
+  async function getOtakuProfileWithUsername(username) {
+    
+  }
+
   return (
     <div className='page-content'>
       <div className='otaku-profile'>

@@ -43,7 +43,6 @@ const mangaValidation = data => {
       .max(255)
       .required(),
     releaseYear: Joi.number()
-      .min(1900)
       .max(3000)
       .required(),
     latestChapter: Joi.number()

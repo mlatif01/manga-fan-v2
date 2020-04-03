@@ -72,6 +72,7 @@ router.get('/', verify, async (req, res) => {
  * @access Private
  */
 router.post('/', verify, async (req, res) => {
+  console.log(req.body);
   let flag = true;
 
   // Get User Details

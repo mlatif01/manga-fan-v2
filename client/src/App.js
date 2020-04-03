@@ -16,6 +16,7 @@ import Dashboard from './pages/Dashboard';
 import Manga from './pages/Manga';
 import Otaku from './pages/Otaku';
 import OtakuProfile from './components/OtakuProfile';
+import Footer from './components/Footer';
 
 export const AuthContext = React.createContext();
 // Reducer Hook
@@ -191,6 +192,7 @@ function App() {
             <Switch>
               <React.Fragment>
                 <Route
+                  exact
                   path='/dashboard'
                   render={props => <Dashboard {...props} user={state.user} />}
                 />
@@ -201,13 +203,12 @@ function App() {
                   render={props => <Otaku {...props} />}
                 />
                 <Route
-                  // exact
+                  exact
                   path={`/otaku/:otakuId`}
                   render={props => (
                     <OtakuProfile
                       {...props}
                       otakuProfile={state.otakuProfile}
-                      // toggleIsViewingOtakuProfile={toggleIsViewingOtakuProfile}
                     />
                   )}
                 />
@@ -216,6 +217,7 @@ function App() {
             </Switch>
           )}
         </Router>
+        <Footer />
       </div>
     </AuthContext.Provider>
   );

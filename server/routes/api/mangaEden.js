@@ -6,6 +6,24 @@ var baseMangaListURL = 'https://www.mangaeden.com/api/list/0';
 var baseMangaChapterURL = 'https://www.mangaeden.com/api/manga/';
 var baseMangaPagesURL = 'https://www.mangaeden.com/api/chapter/';
 
+/**
+ * @route GET api/manga-eden/names
+ * @desc Get User's Manga List
+ * @access Private
+ */
+router.get('/names', verify, async (req, res) => {
+  const mangasResponse = await fetch(baseMangaListURL);
+  const mangasData = await mangasResponse.json();
+  let mangaNamesArr = [];
+  mangasData.manga.forEach(manga => {
+    mangaNamesArr.push(manga['t']);
+  });
+  mangaNamesArr = mangaNamesArr.sort((a, b) => {
+    return a.localeCompare(b);
+  });
+  res.send(mangaNamesArr);
+});
+
 // GET - user manga list
 router.get('/:info', verify, async (req, res) => {
   // get request params
