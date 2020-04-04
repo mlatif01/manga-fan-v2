@@ -21,17 +21,17 @@ class Autocomplete extends Component {
       // Whether or not the suggestion list is shown
       showSuggestions: false,
       // What the user has entered
-      userInput: ''
+      userInput: '',
     };
   }
 
-  onChange = e => {
+  onChange = (e) => {
     const { suggestions } = this.props;
     const userInput = e.currentTarget.value;
 
     // Filter our suggestions that don't contain the user's input
     const filteredSuggestions = suggestions.filter(
-      suggestion =>
+      (suggestion) =>
         suggestion.toLowerCase().indexOf(userInput.toLowerCase()) > -1
     );
 
@@ -41,21 +41,21 @@ class Autocomplete extends Component {
       activeSuggestion: 0,
       filteredSuggestions,
       showSuggestions: true,
-      userInput: e.currentTarget.value
+      userInput: e.currentTarget.value,
     });
   };
 
-  onClick = e => {
+  onClick = (e) => {
     this.props.triggerNewMangaUpdate(e.currentTarget.innerText);
     this.setState({
       activeSuggestion: 0,
       filteredSuggestions: [],
       showSuggestions: false,
-      userInput: e.currentTarget.innerText
+      userInput: e.currentTarget.innerText,
     });
   };
 
-  onKeyDown = e => {
+  onKeyDown = (e) => {
     const { activeSuggestion, filteredSuggestions } = this.state;
 
     // User pressed the enter key
@@ -63,7 +63,7 @@ class Autocomplete extends Component {
       this.setState({
         activeSuggestion: 0,
         showSuggestions: false,
-        userInput: filteredSuggestions[activeSuggestion]
+        userInput: filteredSuggestions[activeSuggestion],
       });
     }
     // User pressed the up arrow
@@ -93,8 +93,8 @@ class Autocomplete extends Component {
         activeSuggestion,
         filteredSuggestions,
         showSuggestions,
-        userInput
-      }
+        userInput,
+      },
     } = this;
 
     let suggestionsListComponent;
@@ -122,7 +122,7 @@ class Autocomplete extends Component {
       } else {
         suggestionsListComponent = (
           <div className='no-suggestions'>
-            <em>No suggestions, you're on your own!</em>
+            <em>No suggestions, manga not found!</em>
           </div>
         );
       }

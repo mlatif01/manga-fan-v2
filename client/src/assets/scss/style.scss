@@ -57,6 +57,7 @@ h2 {
 
 // Content
 .page-content {
+  margin-bottom: 2rem;
   padding-top: 8rem;
   color: #000;
 }
@@ -302,7 +303,7 @@ h2 {
     .otaku-card-content {
       display: grid;
       grid-gap: 1rem;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 2fr;
 
       .otaku-manga {
         margin: 1rem auto;
@@ -310,10 +311,10 @@ h2 {
 
       img {
         width: 100px;
-        margin: 1rem auto;
+        // margin: 1rem auto;
       }
       h2 {
-        margin: 1rem auto;
+        // margin: 1rem auto;
       }
 
       li {
@@ -323,6 +324,10 @@ h2 {
         align-items: center;
         font-size: 1rem;
         text-align: left;
+
+        i {
+          margin-right: 5px;
+        }
       }
     }
   }
@@ -429,14 +434,15 @@ h2 {
 }
 
 .suggestions {
-  border: 1px solid #999;
-  border-top-width: 0;
+  border: 1px solid $light-color;
+  border-top-width: 1px;
   list-style: none;
-  max-height: 143px;
+  max-height: 140px;
   overflow-y: auto;
   padding-left: 0;
-  width: calc(300px + 1rem);
-  margin: 2rem auto;
+  width: 51%;
+  margin: -5px auto;
+  margin-bottom: 1rem;
 }
 
 .suggestions li {

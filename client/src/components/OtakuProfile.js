@@ -23,9 +23,7 @@ export default function OtakuProfile({ otakuProfile }) {
     await postFriend(newFriendName, newFriendId);
   }
 
-  async function getOtakuProfileWithUsername(username) {
-    
-  }
+  async function getOtakuProfileWithUsername(username) {}
 
   return (
     <div className='page-content'>
@@ -54,7 +52,7 @@ export default function OtakuProfile({ otakuProfile }) {
           <div className='line'></div>
           {<p className='lead'>{otakuProfile.profile.bio}</p>}
           <div className='social'>
-            <button className='btn btn-primary message'>Send Message</button>
+            {/* <button className='btn btn-primary message'>Send Message</button> */}
             <a href={otakuProfile.profile.instagram} className='btn insta'>
               <i className='fab fa-instagram fa-4x'></i>
             </a>
