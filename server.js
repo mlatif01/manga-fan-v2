@@ -21,9 +21,13 @@ const friendRoute = require('./routes/api/friend');
 const db = config.get('mongoURI');
 
 // Connect to DB
-mongoose.connect(db, { useNewUrlParser: true }, () => {
-  console.log('connected to DB');
-});
+mongoose.connect(
+  process.env.MONGODB_URI || db,
+  { useNewUrlParser: true },
+  () => {
+    console.log('connected to DB');
+  }
+);
 
 // Middleware
 app.use(express.json());
@@ -42,7 +46,16 @@ app.use('/api/users/profile', profileRoute);
 app.use('/api/users/otaku', otakuRoute);
 app.use('/api/users/friends', friendRoute);
 
+// Heroku Config
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html')); // relative path
+  });
+}
+
 // Run server on the specified port
-app.listen(port, function() {
+app.listen(port, function () {
   console.log(`Server running on ${port}...`);
 });
