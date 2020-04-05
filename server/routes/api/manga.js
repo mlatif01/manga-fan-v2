@@ -7,6 +7,8 @@ const verify = require('../../middleware/verifyToken');
 // Models
 const User = require('../../models/User');
 const Manga = require('../../models/Manga');
+const Friend = require('../../models/Friend');
+const MangaComments = require('../../models/MangaComments');
 // Validation
 const { mangaValidation } = require('../../middleware/validation');
 
@@ -21,7 +23,7 @@ async function getFullMangaDetails(title) {
     title: undefined,
     releaseYear: undefined,
     latestChapter: undefined,
-    lastRead: 1
+    lastRead: 1,
   };
 
   // used to find chapters and latest chapter number
@@ -32,7 +34,7 @@ async function getFullMangaDetails(title) {
   let listData = await listResponse.json();
 
   // get manga info and assign to mangaInfo obj
-  listData.manga.forEach(manga => {
+  listData.manga.forEach((manga) => {
     if (manga.t.toUpperCase() === title.toUpperCase()) {
       mangaInfo.title = manga.t;
       mangaId = manga.i;
@@ -86,7 +88,7 @@ router.post('/', verify, async (req, res) => {
   const MangaExists = await Manga.findOne({ userId: req.user._id });
 
   if (MangaExists) {
-    MangaExists.mangas.forEach(entry => {
+    MangaExists.mangas.forEach((entry) => {
       if (entry.title.toLowerCase() === req.body.title.toLowerCase()) {
         console.log('Manga Already Here!');
         flag = false;
@@ -102,7 +104,7 @@ router.post('/', verify, async (req, res) => {
   if (!MangaExists && flag) {
     // Create a new fav manga entry
     const entry = new Manga({
-      userId: user._id
+      userId: user._id,
     });
     entry.mangas.push(manga);
     console.log('New Entry ');
@@ -159,14 +161,14 @@ router.put('/', verify, async (req, res) => {
       // match criteria
       {
         userId: req.user._id,
-        mangas: { $elemMatch: { _id: req.body.mangaId } }
+        mangas: { $elemMatch: { _id: req.body.mangaId } },
       },
 
       // update first match
       {
         $set: {
-          'mangas.$.lastRead': req.body.newLastRead
-        }
+          'mangas.$.lastRead': req.body.newLastRead,
+        },
       }
     );
     res.send({ mangaId: req.body.mangaId });
@@ -174,6 +176,100 @@ router.put('/', verify, async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(400).send(err);
+  }
+});
+
+/**
+ * @route POST api/manga/comments
+ * @desc Add comment to specific chapter
+ * @access Private
+ */
+router.post('/comments', verify, async (req, res) => {
+  // the body will have - title, chapterNumber
+  console.log(req.body);
+  let flag = true;
+
+  // Get User Details
+  const user = await User.findById(req.user);
+
+  // Checking if the user has manga comments collections entry
+  const MangaCommentsExists = await MangaComments.findOne({
+    title: req.body.title.toLowerCase(),
+    chapterNumber: req.body.chapterNumber,
+  });
+
+  console.log(MangaCommentsExists);
+
+  const mangaCommentObj = {
+    userId: req.user._id,
+    comment: req.body.comment,
+  };
+
+  // store the data to db
+  if (!MangaCommentsExists) {
+    // Create a new manga comments entry
+    const entry = new MangaComments({
+      title: req.body.title.toLowerCase(),
+      chapterNumber: req.body.chapterNumber,
+    });
+    entry.comments.push(mangaCommentObj);
+    console.log('New Manga Comment Entry');
+    try {
+      const savedEntry = await entry.save();
+      res.send({ mangaCommentId: entry.id });
+    } catch (err) {
+      res.status(400).send(err);
+    }
+  } else if (MangaCommentsExists) {
+    // add to existing entry
+    console.log('Existing Manga Comment Entry');
+    const entry = MangaCommentsExists;
+    entry.comments.push(mangaCommentObj);
+    try {
+      const savedEntry = await entry.save();
+      res.send({ mangaCommentId: entry.id });
+    } catch (err) {
+      console.log(err);
+      res.status(400).send(err);
+    }
+  }
+});
+
+/**
+ * @route GET api/manga/comments
+ * @desc Retrieve comments left by friends for specific chapter
+ * @access Private
+ */
+router.get('/comments/:info', verify, async (req, res) => {
+  // get request params
+  const info = req.params.info.split(',');
+  const title = info[0].toLowerCase();
+  const chapterNumber = info[1];
+  const friend = await Friend.findOne({ userId: req.user._id });
+  const mangaCommentsEntry = await MangaComments.find({
+    title: title,
+    chapterNumber: chapterNumber,
+  });
+  const commentsArr = [];
+  // find comments objects only for friends
+  if (mangaCommentsEntry[0]) {
+    mangaCommentsEntry[0].comments.forEach((commentEntry) => {
+      friend.friends.forEach((friend) => {
+        if (friend.friendId.toString() === commentEntry.userId.toString()) {
+          commentsArr.push({
+            username: friend.name,
+            comment: commentEntry.comment,
+            date: commentEntry.comment_date,
+          });
+        }
+      });
+    });
+  }
+
+  if (commentsArr) {
+    res.send(commentsArr);
+  } else {
+    res.send([]);
   }
 });
 

@@ -5,7 +5,7 @@ import submitProfile from '../api/submitProfile';
 
 const INITIAL_STATE = {
   bio: '',
-  instagram: ''
+  instagram: '',
 };
 
 export default function ProfileCard({ user }) {
@@ -14,21 +14,21 @@ export default function ProfileCard({ user }) {
   const [isSubmitting, setSubmitting] = useState(false);
   const [values, setValues] = useState(INITIAL_STATE);
 
-  // useEffect(() => {
-  //   setValues({
-  //     bio: user.profile.bio,
-  //     instagram: user.profile.instagram
-  //   });
-  // }, []);
+  useEffect(() => {
+    setValues({
+      bio: user.profile.bio,
+      instagram: user.profile.instagram,
+    });
+  }, []);
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setValues({
       ...values,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     submitProfile(values, dispatch);
     setSubmitting(true);

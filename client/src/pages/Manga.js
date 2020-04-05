@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import Table from '../components/Table';
 import Reader from '../components/Reader';
+import CommentSection from '../components/CommentSection';
 import loader from '../assets/img/loader.gif';
 import { AuthContext } from '../App';
 
@@ -12,8 +13,8 @@ const INITIAL_STATE = {
   isReading: false,
   chapterInfo: {
     title: '',
-    chapter: 0
-  }
+    chapter: 0,
+  },
 };
 
 const reducer = (state, action) => {
@@ -22,30 +23,30 @@ const reducer = (state, action) => {
       return {
         ...state,
         isFetching: true,
-        hasError: false
+        hasError: false,
       };
     case 'FETCH_MANGA_SUCCESS':
       return {
         ...state,
         isFetching: false,
-        manga: action.payload
+        manga: action.payload,
       };
     case 'FETCH_MANGA_FAILURE':
       return {
         ...state,
         hasError: true,
-        isFetching: false
+        isFetching: false,
       };
     case 'READ_MANGA':
       return {
         ...state,
         isReading: true,
-        chapterInfo: action.payload
+        chapterInfo: action.payload,
       };
     case 'NOT_READING_MANGA':
       return {
         ...state,
-        isReading: false
+        isReading: false,
       };
     default:
       return state;
@@ -58,31 +59,31 @@ export default function Manga() {
 
   const fetchManga = () => {
     dispatch({
-      type: 'FETCH_MANGA_REQUEST'
+      type: 'FETCH_MANGA_REQUEST',
     });
     fetch('/api/manga', {
       headers: {
-        Authorization: JSON.parse(localStorage.getItem('token'))
-      }
+        Authorization: JSON.parse(localStorage.getItem('token')),
+      },
     })
-      .then(res => {
+      .then((res) => {
         if (res.ok) {
           return res.json();
         } else {
           throw res;
         }
       })
-      .then(resJson => {
+      .then((resJson) => {
         console.log(resJson);
         dispatch({
           type: 'FETCH_MANGA_SUCCESS',
-          payload: resJson
+          payload: resJson,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         dispatch({
-          type: 'FETCH_MANGA_FAILURE'
+          type: 'FETCH_MANGA_FAILURE',
         });
       });
   };
@@ -99,15 +100,15 @@ export default function Manga() {
   };
 
   // Toggles Table and Reader component
-  const toggleIsReading = mangaObj => {
+  const toggleIsReading = (mangaObj) => {
     !state.isReading
       ? dispatch({
           type: 'READ_MANGA',
-          payload: mangaObj
+          payload: mangaObj,
         })
       : dispatch({
           type: 'NOT_READING_MANGA',
-          payload: {}
+          payload: {},
         });
   };
 
@@ -127,10 +128,13 @@ export default function Manga() {
           />
         </React.Fragment>
       ) : (
-        <Reader
-          toggleIsReading={toggleIsReading}
-          chapterInfo={state.chapterInfo}
-        />
+        <React.Fragment>
+          <Reader
+            toggleIsReading={toggleIsReading}
+            chapterInfo={state.chapterInfo}
+          />
+          <CommentSection chapterInfo={state.chapterInfo} />
+        </React.Fragment>
       )}
     </div>
   );

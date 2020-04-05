@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
 } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -22,10 +22,10 @@ export const AuthContext = React.createContext();
 // Reducer Hook
 const INITIAL_STATE = {
   redirectToLogin: false,
-  isAuthenticated: true,
+  isAuthenticated: false,
   user: null,
   token: null,
-  otakuProfile: null
+  otakuProfile: null,
 };
 const reducer = (state, action) => {
   switch (action.type) {
@@ -36,31 +36,31 @@ const reducer = (state, action) => {
         ...state,
         isAuthenticated: true,
         user: action.payload.user,
-        token: action.payload.token
+        token: action.payload.token,
       };
     case 'LOGOUT':
       localStorage.clear();
       return {
         ...state,
         isAuthenticated: false,
-        user: null
+        user: null,
       };
     case 'REGISTER':
       return {
         ...state,
-        redirectToLogin: true
+        redirectToLogin: true,
       };
     case 'UPDATE_PROFILE':
       return {
         ...state,
         user: {
-          profile: action.payload.profile
-        }
+          profile: action.payload.profile,
+        },
       };
     case 'SET_OTAKU_PROFILE':
       return {
         ...state,
-        otakuProfile: action.payload
+        otakuProfile: action.payload,
       };
     default:
       return state;
@@ -81,20 +81,20 @@ function App() {
       text: 'Home',
       path: '/',
       icon: 'fas fa-home',
-      hoverBackground: '#ff4f33'
+      hoverBackground: '#ff4f33',
     },
     {
       text: 'Login',
       path: '/login',
       icon: 'fas fa-sign-in-alt',
-      hoverBackground: '#33d5ff'
+      hoverBackground: '#33d5ff',
     },
     {
       text: 'Register',
       path: '/register',
       icon: 'fas fa-user-plus',
-      hoverBackground: '#73fb00'
-    }
+      hoverBackground: '#73fb00',
+    },
   ];
 
   const postLoginNavLinks = [
@@ -102,25 +102,25 @@ function App() {
       text: 'Dashboard',
       path: '/dashboard',
       icon: 'fas fa-home',
-      hoverBackground: '#ff4f33'
+      hoverBackground: '#ff4f33',
     },
     {
       text: 'Manga',
       path: '/manga',
       icon: 'fas fa-book',
-      hoverBackground: '#33d5ff'
+      hoverBackground: '#33d5ff',
     },
     {
       text: 'Otaku',
       path: '/otaku',
       icon: 'fas fa-users',
-      hoverBackground: '#E800FF'
-    }
+      hoverBackground: '#E800FF',
+    },
   ];
 
   const icons = {
     registerIcon: 'fas fa-user-plus',
-    loginIcon: 'fas fa-sign-in-alt'
+    loginIcon: 'fas fa-sign-in-alt',
   };
 
   // Logo
@@ -130,20 +130,20 @@ function App() {
   toast.configure({
     autoClose: 3000,
     draggable: false,
-    draggablePercent: 60
+    draggablePercent: 60,
   });
 
   const handleLogout = () => {
     dispatch({
-      type: 'LOGOUT'
+      type: 'LOGOUT',
     });
   };
 
-  const handleSetOtakuProfile = otakuProfile => {
+  const handleSetOtakuProfile = (otakuProfile) => {
     console.log(otakuProfile);
     dispatch({
       type: 'SET_OTAKU_PROFILE',
-      payload: otakuProfile
+      payload: otakuProfile,
     });
   };
 
@@ -173,15 +173,17 @@ function App() {
                 <Route
                   exact
                   path='/'
-                  render={props => <Landing {...props} logo={logo} />}
+                  render={(props) => <Landing {...props} logo={logo} />}
                 />
                 <Route
                   path='/login'
-                  render={props => <Login {...props} icon={icons.loginIcon} />}
+                  render={(props) => (
+                    <Login {...props} icon={icons.loginIcon} />
+                  )}
                 />
                 <Route
                   path='/register'
-                  render={props => (
+                  render={(props) => (
                     <Register {...props} icon={icons.registerIcon} />
                   )}
                 />
@@ -194,18 +196,18 @@ function App() {
                 <Route
                   exact
                   path='/dashboard'
-                  render={props => <Dashboard {...props} user={state.user} />}
+                  render={(props) => <Dashboard {...props} user={state.user} />}
                 />
-                <Route path='/manga' render={props => <Manga {...props} />} />
+                <Route path='/manga' render={(props) => <Manga {...props} />} />
                 <Route
                   exact
                   path={'/otaku'}
-                  render={props => <Otaku {...props} />}
+                  render={(props) => <Otaku {...props} />}
                 />
                 <Route
                   exact
                   path={`/otaku/:otakuId`}
-                  render={props => (
+                  render={(props) => (
                     <OtakuProfile
                       {...props}
                       otakuProfile={state.otakuProfile}

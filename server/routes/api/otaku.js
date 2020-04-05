@@ -23,7 +23,7 @@ router.get('/:id', verify, async (req, res) => {
     username: user.username,
     profile: user.profile,
     favManga: [],
-    friends: []
+    friends: [],
   };
   // get users mangas
   const manga = await Manga.findOne({ userId: userId });
@@ -46,24 +46,24 @@ router.get('/:id', verify, async (req, res) => {
 router.get('/', verify, async (req, res) => {
   const allUsers = await User.find();
   var arrOfUsers = [];
-  allUsers.forEach(user => {
+  allUsers.forEach((user) => {
     userObj = {
       userId: user._id,
       username: user.username,
       profile: user.profile,
       favManga: [],
-      friends: []
+      friends: [],
     };
     arrOfUsers.push(userObj);
   });
   // remove logged in user from arr - use != for type coercion
-  arrOfUsers = arrOfUsers.filter(user => user.userId != req.user._id);
+  arrOfUsers = arrOfUsers.filter((user) => user.userId != req.user._id);
 
   // get fav manga details
   const allFavManga = await Manga.find();
 
-  arrOfUsers.forEach(user => {
-    allFavManga.forEach(favManga => {
+  arrOfUsers.forEach((user) => {
+    allFavManga.forEach((favManga) => {
       if (user.userId.equals(favManga.userId)) {
         user.favManga = favManga.mangas;
       }
@@ -73,8 +73,8 @@ router.get('/', verify, async (req, res) => {
   // get all friends details
   const allFriends = await Friend.find();
 
-  arrOfUsers.forEach(user => {
-    allFriends.forEach(friend => {
+  arrOfUsers.forEach((user) => {
+    allFriends.forEach((friend) => {
       if (user.userId.equals(friend.userId)) {
         user.friends = friend.friends;
       }

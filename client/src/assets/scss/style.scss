@@ -488,3 +488,56 @@ h2 {
     }
   }
 }
+
+// Manga Comment Section
+.manga-comment-section {
+  margin-top: 2rem;
+
+  .submit-comment {
+    margin-top: 1rem;
+  }
+  .comments {
+    margin-bottom: 2rem;
+  }
+  .btn.toggle-show {
+    margin-bottom: 2rem;
+  }
+
+  .line {
+    margin: 0 0;
+  }
+
+  textarea {
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    margin: 0 auto;
+    height: 50px;
+    max-height: 100px;
+    width: 50%;
+    max-width: 50%;
+    padding: 0.4rem;
+    font-size: 1.2rem;
+  }
+
+  .comment-card {
+    position: relative;
+    padding: 4rem 0;
+    margin: 0 auto;
+    background-color: $light-color;
+    width: 100%;
+
+    .username {
+      position: absolute;
+      left: 105px;
+      top: 20px;
+    }
+
+    img {
+      width: 100px;
+      position: absolute;
+      left: 100px;
+      top: 70px;
+    }
+  }
+}

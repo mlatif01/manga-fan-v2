@@ -19,24 +19,24 @@ export default function FriendCard({ user }) {
 
   // Fetch friends when the state of the token is updated
   useEffect(() => {
-    getUsersFriends().then(res => {
+    getUsersFriends().then((res) => {
       console.log(res.data);
       setFriends(res.data);
     });
   }, []);
 
-  const viewOtakuProfileOld = friendId => {
+  const viewOtakuProfileOld = (friendId) => {
     // fetch otaku profile
-    getOtakuProfile(friendId).then(res => {
+    getOtakuProfile(friendId).then((res) => {
       console.log(res.data);
       setFriendOtakuProfile(res.data);
       setViewProfile(true);
     });
   };
 
-  const viewOtakuProfile = friendId => {
+  const viewOtakuProfile = (friendId) => {
     // fetch otaku profile
-    getOtakuProfile(friendId).then(res => {
+    getOtakuProfile(friendId).then((res) => {
       console.log(res.data);
       setFriendOtakuProfile(res.data);
       handleSetOtakuProfile(res.data);
@@ -53,12 +53,6 @@ export default function FriendCard({ user }) {
           <div className='line'></div>
           {friends.slice(0, 5).map((friend, index) => (
             <React.Fragment key={index}>
-              {/* <Link
-                onClick={() => viewOtakuProfile(friend.friendId)}
-                to={`/otaku/${friend.name}`}
-              >
-                Hello
-              </Link> */}
               <li key={index} onClick={() => viewOtakuProfile(friend.friendId)}>
                 <span>
                   {' '}
