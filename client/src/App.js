@@ -22,7 +22,7 @@ export const AuthContext = React.createContext();
 // Reducer Hook
 const INITIAL_STATE = {
   redirectToLogin: false,
-  isAuthenticated: false,
+  isAuthenticated: localStorage.getItem('loggedIn') === 'true',
   user: null,
   token: null,
   otakuProfile: null,
@@ -32,6 +32,7 @@ const reducer = (state, action) => {
     case 'LOGIN':
       localStorage.setItem('user', JSON.stringify(action.payload.user));
       localStorage.setItem('token', JSON.stringify(action.payload.token));
+      localStorage.setItem('loggedIn', true);
       return {
         ...state,
         isAuthenticated: true,
@@ -210,7 +211,7 @@ function App() {
                   render={(props) => (
                     <OtakuProfile
                       {...props}
-                      otakuProfile={state.otakuProfile}
+                      otakuProfile={state.otakuProfile || null}
                     />
                   )}
                 />

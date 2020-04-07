@@ -9,13 +9,13 @@ import Autocomplete from '../components/Autocomplete';
 import { AuthContext } from '../App';
 
 const INITIAL_STATE = {
-  newManga: ''
+  newManga: '',
 };
 
 export default function Table({
   mangas,
   triggerParentDispatch,
-  toggleIsReading
+  toggleIsReading,
 }) {
   const { state: authState } = React.useContext(AuthContext);
 
@@ -30,8 +30,8 @@ export default function Table({
       width: '50%',
       backgroundColor: '#ff8f00',
       borderRadius: '10px',
-      transform: 'translate(-50%, -50%)'
-    }
+      transform: 'translate(-50%, -50%)',
+    },
   };
 
   const [newManga, setNewManga] = useState('');
@@ -39,17 +39,18 @@ export default function Table({
   const [mangaId, setMangaId] = useState('');
   const [mangaList, setMangaList] = useState('');
   const [mangaListFetched, setMangaListFetched] = useState(false);
+  const [selectedManga, setSelectedManga] = useState('');
 
   const fetchMangaNames = () => {
     fetch('/api/manga-eden/names', {
       headers: {
-        Authorization: JSON.parse(localStorage.getItem('token'))
-      }
+        Authorization: JSON.parse(localStorage.getItem('token')),
+      },
     })
-      .then(res => {
+      .then((res) => {
         return res.json();
       })
-      .then(resJson => {
+      .then((resJson) => {
         console.log(resJson);
         setMangaList(resJson);
         setMangaListFetched(true);
@@ -66,6 +67,14 @@ export default function Table({
   var subtitle;
   const [mangaModalIsOpen, setMangaIsOpen] = React.useState(false);
   const [lastReadModalIsOpen, setLastReadIsOpen] = React.useState(false);
+  const [deleteMangaModalIsOpen, setDeleteIsOpen] = React.useState(false);
+
+  function openDeleteMangaModal(manga) {
+    setMangaId(manga._id);
+    setSelectedManga(manga.title);
+    setDeleteIsOpen(true);
+  }
+
   function openMangaModal() {
     setMangaIsOpen(true);
   }
@@ -78,6 +87,10 @@ export default function Table({
   function afterOpenModal() {
     // references are now sync'd and can be accessed
     // subtitle.style.color = '#f00';
+  }
+
+  function closeDeleteMangaModal() {
+    setDeleteIsOpen(false);
   }
 
   function closeMangaModal() {
@@ -96,14 +109,11 @@ export default function Table({
     triggerParentDispatch();
   }
 
-  async function handleDelete(mangaId) {
-    const confirmed = window.confirm(
-      'Are you sure you want to delete this entry?'
-    );
-    if (confirmed) {
-      await deleteManga(mangaId, authState);
-      triggerParentDispatch();
-    }
+  async function handleDelete(e) {
+    e.preventDefault();
+    await deleteManga(mangaId, authState);
+    // update Manga parent view
+    triggerParentDispatch();
   }
 
   function handleMangaChange(e) {
@@ -232,12 +242,33 @@ export default function Table({
               </td>
               <td>
                 <button
-                  onClick={() => handleDelete(manga._id)}
+                  onClick={() => openDeleteMangaModal(manga)}
                   className='btn delete-manga'
                   data-open='manga-modal'
                 >
                   <i className='fas fa-minus'></i>
                 </button>
+                <Modal
+                  isOpen={deleteMangaModalIsOpen}
+                  onAfterOpen={afterOpenModal}
+                  onRequestClose={closeDeleteMangaModal}
+                  style={customStyles}
+                  contentLabel=''
+                  mangaId={mangaId}
+                >
+                  <div className='modal-content'>
+                    <button
+                      onClick={closeDeleteMangaModal}
+                      className='btn btn-md btn-danger'
+                    >
+                      <i className='fas fa-window-close'></i>
+                    </button>
+                    <h1>Would you like to delete {selectedManga}?</h1>
+                    <button onClick={handleDelete} className='btn btn-warning'>
+                      Yes
+                    </button>
+                  </div>
+                </Modal>
               </td>
             </tr>
           ))}

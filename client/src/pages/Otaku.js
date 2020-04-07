@@ -12,7 +12,7 @@ const INITIAL_STATE = {
   isFetching: false,
   hasError: false,
   isViewingOtakuProfile: false,
-  otakuProfile: {}
+  otakuProfile: {},
 };
 
 const reducer = (state, action) => {
@@ -21,30 +21,30 @@ const reducer = (state, action) => {
       return {
         ...state,
         isFetching: true,
-        hasError: false
+        hasError: false,
       };
     case 'FETCH_OTAKU_SUCCESS':
       return {
         ...state,
         isFetching: false,
-        otaku: action.payload
+        otaku: action.payload,
       };
     case 'FETCH_OTAKU_FAILURE':
       return {
         ...state,
         hasError: true,
-        isFetching: false
+        isFetching: false,
       };
     case 'VIEW_OTAKU_PROFILE':
       return {
         ...state,
         isViewingOtakuProfile: true,
-        otakuProfile: action.payload
+        otakuProfile: action.payload,
       };
     case 'NOT_VIEW_OTAKU_PROFILE':
       return {
         ...state,
-        isViewingOtakuProfile: false
+        isViewingOtakuProfile: false,
       };
     default:
       return state;
@@ -62,31 +62,31 @@ export default function Otaku() {
 
   const fetchOtaku = () => {
     dispatch({
-      type: 'FETCH_OTAKU_REQUEST'
+      type: 'FETCH_OTAKU_REQUEST',
     });
     fetch('/api/users/otaku', {
       headers: {
-        Authorization: JSON.parse(localStorage.getItem('token'))
-      }
+        Authorization: JSON.parse(localStorage.getItem('token')),
+      },
     })
-      .then(res => {
+      .then((res) => {
         if (res.ok) {
           return res.json();
         } else {
           throw res;
         }
       })
-      .then(resJson => {
+      .then((resJson) => {
         console.log(resJson);
         dispatch({
           type: 'FETCH_OTAKU_SUCCESS',
-          payload: resJson
+          payload: resJson,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         dispatch({
-          type: 'FETCH_OTAKU_FAILURE'
+          type: 'FETCH_OTAKU_FAILURE',
         });
       });
   };
@@ -109,12 +109,12 @@ export default function Otaku() {
   // };
 
   // View Otaku Profile
-  const viewOtakuProfile = otakuProfile => {
+  const viewOtakuProfile = (otakuProfile) => {
     handleSetOtakuProfile(otakuProfile);
     history.push('/otaku');
     dispatch({
       type: 'VIEW_OTAKU_PROFILE',
-      payload: otakuProfile
+      payload: otakuProfile,
     });
   };
 

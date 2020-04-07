@@ -17,7 +17,7 @@ export default function FriendCard({ user }) {
 
   let history = useHistory();
 
-  // Fetch friends when the state of the token is updated
+  // Fetch friends on start
   useEffect(() => {
     getUsersFriends().then((res) => {
       console.log(res.data);
