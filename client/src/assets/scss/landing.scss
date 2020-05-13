@@ -21,3 +21,13 @@
     font-size: 7rem;
   }
 }
+
+@media screen and (max-width: 459px) {
+  .landing-inner {
+    padding: 3rem;
+  }
+
+  .landing i {
+    font-size: 4rem;
+  }
+}
