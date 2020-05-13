@@ -313,9 +313,9 @@ h2 {
         width: 100px;
         // margin: 1rem auto;
       }
-      h2 {
-        // margin: 1rem auto;
-      }
+      // h2 {
+      //   margin: 1rem auto;
+      // }
 
       li {
         margin: 0.2rem auto;
@@ -471,12 +471,12 @@ h2 {
   height: 60px;
   background-color: $primary-color;
   position: relative;
+  bottom: 0;
 
   &-content {
     width: 100%;
     position: absolute;
     text-align: center;
-    padding-top: 1rem;
   }
 
   &-eden {
@@ -539,5 +539,95 @@ h2 {
       left: 100px;
       top: 70px;
     }
+  }
+}
+
+// Media Queries
+
+@media screen and (max-width: 459px) {
+  .lead {
+    font-size: 1rem;
+  }
+
+  .text-lg {
+    font-size: 1.6rem;
+  }
+
+  .text-xlg {
+    font-size: 2rem;
+  }
+
+  .auth-form {
+    padding: 2rem;
+    margin: 2rem;
+  }
+
+  .dashboard {
+    grid-template-areas:
+      'profile profile profile'
+      'friends friends friends'
+      'manga manga manga';
+
+    margin: 1rem;
+
+    .friends {
+      li {
+        margin: 0;
+      }
+    }
+  }
+
+  .profile-form {
+    grid-template-columns: 1fr;
+
+    .btn {
+      margin: 0 auto;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .profile-form input[type='text'] {
+    width: 80%;
+  }
+
+  .profile-form textarea {
+    width: 80%;
+  }
+
+  .otaku-content {
+    display: block;
+  }
+  .otaku-content .otaku-card {
+    width: 300px;
+  }
+
+  .otaku-profile .heading {
+    width: 90%;
+
+    .avatar {
+      width: 10rem;
+    }
+  }
+
+  .otaku-profile .otaku-profile-content {
+    display: block;
+    margin: 0 2rem;
+  }
+
+  .otaku-profile .otaku-profile-content .fav-manga,
+  .otaku-profile .otaku-profile-content .friends-list {
+    width: 90%;
+  }
+
+  .otaku-profile .otaku-profile-content .fav-manga li .btn,
+  .otaku-profile .otaku-profile-content .friends-list li .btn {
+    margin: 0 auto;
+    display: block;
+    float: none;
+  }
+
+  .otaku-profile .heading .head .btn.friend {
+    position: initial;
+    margin: 2rem 2rem;
   }
 }

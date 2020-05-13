@@ -101,7 +101,6 @@ table {
 
 @media screen and (max-width: 759px) {
   .table {
-    margin-left: 6rem;
     width: 80vw;
     .hide-sm {
       display: none;
@@ -111,19 +110,18 @@ table {
     }
   }
 
-  .page-content {
-    .manga-h2 {
-      margin-left: 3rem;
-    }
-  }
-
   .modal-content {
+    margin-top: 3rem;
     h1 {
       font-size: 1.2rem;
     }
     .btn {
       padding: 0.3rem 0.8rem;
       margin-top: 0.5rem;
+      top: 0px;
+    }
+    .btn-danger {
+      top: 0px;
     }
     input[type='text'],
     input[type='number'] {

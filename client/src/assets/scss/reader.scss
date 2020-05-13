@@ -46,10 +46,16 @@
 
 @media screen and (max-width: 759px) {
   .manga-content {
-    margin-left: 6rem;
-
     .manga-inner {
       flex-direction: column;
     }
+  }
+
+  .manga-comment-section .comment-card img {
+    display: none;
+  }
+
+  .manga-comment-section .comment-card .username {
+    position: none;
   }
 }
