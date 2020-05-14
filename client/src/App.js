@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
   Route,
@@ -19,6 +19,7 @@ import OtakuProfile from './components/OtakuProfile';
 import Footer from './components/Footer';
 
 export const AuthContext = React.createContext();
+export const ThemeContext = React.createContext();
 // Reducer Hook
 const INITIAL_STATE = {
   redirectToLogin: false,
@@ -69,6 +70,17 @@ const reducer = (state, action) => {
 };
 
 function App() {
+  const [theme, setTheme] = useState('light');
+
+  const toggleTheme = () => {
+    console.log('TOGGLE');
+    if (theme === 'light') {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
+  };
+
   const NoMatchPage = () => {
     return (
       <div className='page-content'>
@@ -192,32 +204,39 @@ function App() {
               <Route component={NoMatchPage} />
             </Switch>
           ) : (
-            <Switch>
-              <React.Fragment>
-                <Route
-                  exact
-                  path='/dashboard'
-                  render={(props) => <Dashboard {...props} user={state.user} />}
-                />
-                <Route path='/manga' render={(props) => <Manga {...props} />} />
-                <Route
-                  exact
-                  path={'/otaku'}
-                  render={(props) => <Otaku {...props} />}
-                />
-                <Route
-                  exact
-                  path={`/otaku/:otakuId`}
-                  render={(props) => (
-                    <OtakuProfile
-                      {...props}
-                      otakuProfile={state.otakuProfile || null}
-                    />
-                  )}
-                />
-              </React.Fragment>
-              <Route component={NoMatchPage} />
-            </Switch>
+            <ThemeContext.Provider value={{ theme, setTheme }}>
+              <Switch>
+                <React.Fragment>
+                  <Route
+                    exact
+                    path='/dashboard'
+                    render={(props) => (
+                      <Dashboard {...props} user={state.user} />
+                    )}
+                  />
+                  <Route
+                    path='/manga'
+                    render={(props) => <Manga {...props} />}
+                  />
+                  <Route
+                    exact
+                    path={'/otaku'}
+                    render={(props) => <Otaku {...props} />}
+                  />
+                  <Route
+                    exact
+                    path={`/otaku/:otakuId`}
+                    render={(props) => (
+                      <OtakuProfile
+                        {...props}
+                        otakuProfile={state.otakuProfile || null}
+                      />
+                    )}
+                  />
+                </React.Fragment>
+                <Route component={NoMatchPage} />
+              </Switch>
+            </ThemeContext.Provider>
           )}
         </Router>
         <Footer />

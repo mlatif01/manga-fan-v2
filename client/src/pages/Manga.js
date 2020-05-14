@@ -5,6 +5,7 @@ import Reader from '../components/Reader';
 import CommentSection from '../components/CommentSection';
 import loader from '../assets/img/loader.gif';
 import { AuthContext } from '../App';
+import { ThemeContext } from '../App';
 
 const INITIAL_STATE = {
   manga: [],
@@ -56,6 +57,7 @@ const reducer = (state, action) => {
 export default function Manga() {
   const { state: authState } = React.useContext(AuthContext);
   const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
+  const { theme, setTheme } = React.useContext(ThemeContext);
 
   const fetchManga = () => {
     dispatch({
@@ -113,29 +115,39 @@ export default function Manga() {
   };
 
   return (
-    <div className='page-content'>
-      {state.isFetching ? (
-        <img className='loader' src={loader} alt='loader' />
-      ) : state.hasError ? (
-        <span className='error'>AN ERROR HAS OCCURED</span>
-      ) : !state.isReading ? (
-        <React.Fragment>
-          <h2 className='manga-h2'>Read Your Favourite Manga</h2>
-          <Table
-            triggerParentDispatch={triggerParentDispatch}
-            toggleIsReading={toggleIsReading}
-            mangas={state.manga}
-          />
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <Reader
-            toggleIsReading={toggleIsReading}
-            chapterInfo={state.chapterInfo}
-          />
-          <CommentSection chapterInfo={state.chapterInfo} />
-        </React.Fragment>
-      )}
+    <div className={theme}>
+      <div className='page-content'>
+        <button
+          className='btn btn-theme'
+          onClick={() =>
+            theme === 'light' ? setTheme('dark') : setTheme('light')
+          }
+        >
+          {theme === 'light' ? '🔦' : '💡'}
+        </button>
+        {state.isFetching ? (
+          <img className='loader' src={loader} alt='loader' />
+        ) : state.hasError ? (
+          <span className='error'>AN ERROR HAS OCCURED</span>
+        ) : !state.isReading ? (
+          <React.Fragment>
+            <h2 className='manga-h2'>Read Your Favourite Manga</h2>
+            <Table
+              triggerParentDispatch={triggerParentDispatch}
+              toggleIsReading={toggleIsReading}
+              mangas={state.manga}
+            />
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <Reader
+              toggleIsReading={toggleIsReading}
+              chapterInfo={state.chapterInfo}
+            />
+            <CommentSection chapterInfo={state.chapterInfo} />
+          </React.Fragment>
+        )}
+      </div>
     </div>
   );
 }

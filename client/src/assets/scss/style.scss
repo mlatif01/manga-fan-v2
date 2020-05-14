@@ -39,6 +39,17 @@ body {
   visibility: hidden;
 }
 
+// Theme
+.dark {
+  color: #dadada;
+  background: #1c2022;
+  min-height: 100%;
+}
+
+.btn-theme {
+  margin-bottom: 1rem;
+}
+
 @media screen and (max-width: 759px) {
   .hide-sm {
     visibility: hidden;

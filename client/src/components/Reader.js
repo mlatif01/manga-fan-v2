@@ -10,7 +10,7 @@ const INITIAL_STATE = {
   page: 1,
   isFetching: false,
   hasError: false,
-  CDN: 'https://cdn.mangaeden.com/mangasimg/'
+  CDN: 'https://cdn.mangaeden.com/mangasimg/',
 };
 
 const reducer = (state, action) => {
@@ -19,7 +19,7 @@ const reducer = (state, action) => {
       return {
         ...state,
         isFetching: true,
-        hasError: false
+        hasError: false,
       };
     case 'FETCH_CHAPTER_SUCCESS':
       return {
@@ -27,31 +27,31 @@ const reducer = (state, action) => {
         isFetching: false,
         chapter: action.payload.images,
         pageIndex: action.payload.images.length - 1,
-        currentImg: action.payload.images[action.payload.images.length - 1][1]
+        currentImg: action.payload.images[action.payload.images.length - 1][1],
       };
     case 'FETCH_CHAPTER_FAILURE':
       return {
         ...state,
         hasError: true,
-        isFetching: false
+        isFetching: false,
       };
     case 'NEXT_PAGE':
       return {
         ...state,
         page: state.page + 1,
         pageIndex: state.pageIndex - 1,
-        currentImg: state.chapter[state.pageIndex - 1][1]
+        currentImg: state.chapter[state.pageIndex - 1][1],
       };
     case 'PREV_PAGE':
       return {
         ...state,
         page: state.page - 1,
         pageIndex: state.pageIndex + 1,
-        currentImg: state.chapter[state.pageIndex + 1][1]
+        currentImg: state.chapter[state.pageIndex + 1][1],
       };
     case 'REFRESH_PAGE':
       return {
-        ...state
+        ...state,
       };
     default:
       return state;
@@ -68,38 +68,38 @@ export default function Reader({ chapterInfo, toggleIsReading }) {
 
   useEffect(() => {
     dispatch({
-      type: 'REFRESH_PAGE'
+      type: 'REFRESH_PAGE',
     });
   }, [state.currentImg]);
 
   const fetchChapter = () => {
     dispatch({
-      type: 'FETCH_CHAPTER_REQUEST'
+      type: 'FETCH_CHAPTER_REQUEST',
     });
     fetch('/api/manga-eden' + `/${chapterInfo.title},${chapterInfo.lastRead}`, {
       headers: {
         'Content-Type': 'application/json',
-        Authorization: JSON.parse(localStorage.getItem('token'))
-      }
+        Authorization: JSON.parse(localStorage.getItem('token')),
+      },
     })
-      .then(res => {
+      .then((res) => {
         if (res.ok) {
           return res.json();
         } else {
           throw res;
         }
       })
-      .then(resJson => {
+      .then((resJson) => {
         console.log(resJson);
         dispatch({
           type: 'FETCH_CHAPTER_SUCCESS',
-          payload: resJson
+          payload: resJson,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         dispatch({
-          type: 'FETCH_CHAPTER_FAILURE'
+          type: 'FETCH_CHAPTER_FAILURE',
         });
       });
   };
@@ -111,19 +111,19 @@ export default function Reader({ chapterInfo, toggleIsReading }) {
   function handleNextPage() {
     if (state.page < state.chapter.length)
       dispatch({
-        type: 'NEXT_PAGE'
+        type: 'NEXT_PAGE',
       });
   }
 
   function handlePrevPage() {
     if (state.page > 1) {
       dispatch({
-        type: 'PREV_PAGE'
+        type: 'PREV_PAGE',
       });
     }
   }
 
-  const handleKeyPress = e => {
+  const handleKeyPress = (e) => {
     console.log(e);
   };
 
